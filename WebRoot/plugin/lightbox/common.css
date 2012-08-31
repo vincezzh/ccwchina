@@ -1,0 +1,17 @@
+/* jQuery lightBox plugin - Gallery style */
+#gallery {
+	padding: 0px;
+	width: 575px;
+}
+#gallery ul { list-style: none; }
+#gallery ul li { display: inline; }
+#gallery ul img {
+	border: 5px solid #fff;
+	border-width: 2px 2px 2px;
+}
+#gallery ul a:hover img {
+	border: 5px solid #ef9b11;
+	border-width: 2px 2px 2px;
+	color: #fff;
+}
+#gallery ul a:hover { color: #fff; }

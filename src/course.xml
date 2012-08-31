@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="course" extends="struts-default-custom" namespace="/course">
+		<action name="calendar" class="courseListAction" method="getAMonthCalendar">
+			<result name="input">/WEB-INF/jsp/common/error.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-calendar" class="courseListAction" method="gotoCourseCalendar">
+        	<result name="success">/WEB-INF/jsp/course/calendar.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-catelog">
+        	<result>/WEB-INF/jsp/course/course-catelog.jsp</result>
+		</action>
+		
+		<action name="course-desc" class="courseContentListAction" method="getCourseDesc">
+			<result name="success">/WEB-INF/jsp/course/course-list.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="check-course-calendar" class="courseListAction" method="checkCourseCalendar">
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>

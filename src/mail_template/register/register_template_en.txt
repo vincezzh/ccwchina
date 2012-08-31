@@ -1,0 +1,11 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>Dear, #nickname#</div>
+<div>You have been registed successful. Welcome to be one of menbers in CCW</div>
+<div>UserId: <span style="color:red">#userId#</span></div>
+<div>Password: <span style="color:red">#password#</span></div>
+<div>Please go to user center to fill out all of your information. It's very important to us.</div>
+<div>CCW Assistant</div>
+</body>
+</html>

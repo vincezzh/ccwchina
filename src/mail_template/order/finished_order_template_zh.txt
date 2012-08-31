@@ -1,0 +1,10 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div>你好, #name#</div>
+	<div>你的订单(订单号: <span style="color:red">#orderId#</span>)已经结束， 你获得了<span style="color:red">#points#</span>返点, 下次订课时可以抵扣上课费用。</div>
+	<div>中华料理教室助手</div>
+</body>
+</html>

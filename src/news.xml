@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="news" extends="struts-default-custom" namespace="/news">
+		<action name="news-list" class="newsAction" method="gotoNewsPage">
+        	<result>/WEB-INF/jsp/news/news.jsp</result>
+		</action>
+    </package>
+</struts>

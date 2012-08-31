@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="others" extends="struts-default-custom" namespace="/others">
+		<action name="contact">
+        	<result>/WEB-INF/jsp/others/contact.jsp</result>
+		</action>
+		
+		<action name="kitchen">
+        	<result>/WEB-INF/jsp/others/kitchen.jsp</result>
+		</action>
+		
+		<action name="faqs">
+        	<result>/WEB-INF/jsp/others/faqs.jsp</result>
+		</action>
+		
+		<action name="founder">
+        	<result>/WEB-INF/jsp/others/founder.jsp</result>
+		</action>
+		
+		<action name="team">
+        	<result>/WEB-INF/jsp/others/team.jsp</result>
+		</action>
+		
+		<action name="about">
+        	<result>/WEB-INF/jsp/others/about.jsp</result>
+		</action>
+		
+		<action name="guide">
+        	<result>/WEB-INF/jsp/others/guide.jsp</result>
+		</action>
+		
+		<action name="photos" class="photoAction" method="gotoPhotoPage">
+        	<result name="success">/WEB-INF/jsp/photo/photo-list.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="mail" class="mailAction" method="gotoMailPage">
+        	<result name="success">/WEB-INF/jsp/mail/mail.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-mail" class="mailAction" method="saveMail">
+        	<result name="success" type="chain">mail</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>

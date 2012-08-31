@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="_administrator" extends="struts-default" namespace="/_administrator">
+		<interceptors>
+			<interceptor name="authAdmin" class ="com.ccw.interceptor.AdminAuthorizationInterceptor"/>
+			
+			<interceptor-stack name="adminInterceptorStack">
+				<interceptor-ref name="authAdmin"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="admin">
+			<result>/WEB-INF/jsp/_administrator/login.jsp</result>
+		</action>
+		
+		<action name="admin_index">
+        	<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+        	<result>/WEB-INF/jsp/_administrator/index.jsp</result>
+        	<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+		</action>
+		
+		<action name="admin_login" class="adminAction" method="login">
+			<result name="success" type="chain">admin_index</result>
+			<result name="input">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="admin_logout" class="adminAction" method="logout">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="top">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/top.jsp</result>
+		</action>
+		
+		<action name="nav_menu">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu.jsp</result>
+		</action>
+		
+		<action name="nav_menu-course">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-course.jsp</result>
+		</action>
+		
+		<action name="nav_menu-order">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-order.jsp</result>
+		</action>
+		
+		<action name="nav_menu-news">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-news.jsp</result>
+		</action>
+		
+		<action name="nav_menu-message">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-message.jsp</result>
+		</action>
+		
+		<action name="nav_menu-photo">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-photo.jsp</result>
+		</action>
+		
+		<action name="nav_menu-market">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-market.jsp</result>
+		</action>
+		
+		<action name="nav_menu-user">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-user.jsp</result>
+		</action>
+		
+		<action name="nav_menu-other">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/nav/menu-other.jsp</result>
+		</action>
+		
+		<action name="main">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result>/WEB-INF/jsp/_administrator/main.jsp</result>
+		</action>
+		
+		<action name="freshCoursebranchtype" class="adminTypeAction" method="changeCoursebranchtypeList">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refreshCourseContent" class="adminTypeAction" method="changeCourseContent">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-category-course" class="adminCoursetypeAction" method="gotoAddCoursePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-category-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-category-add" class="adminCoursetypeAction" method="addCategoryCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-category-course" class="adminCoursetypeAction" method="showCategoryCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-category-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-category-course" class="adminCoursetypeAction" method="gotoUpdateCoursePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-category-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-category-update" class="adminCoursetypeAction" method="updateCategoryCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-category-delete" class="adminCoursetypeAction" method="deleteCategoryCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-course" class="adminCourseAction" method="gotoAddCoursePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-add" class="adminCourseAction" method="addCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-course" class="adminCourseAction" method="showCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-course" class="adminCourseAction" method="gotoUpdateCoursePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-course.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-update" class="adminCourseAction" method="updateCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-delete" class="adminCourseAction" method="deleteCourse">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-course-calendar" class="adminCourseCalendarAction" method="gotoAddCourseCalendarPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-course-calendar.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-calendar-add" class="adminCourseCalendarAction" method="addCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">add-course-calendar</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-course-calendar" class="adminCourseCalendarAction" method="showCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-course-calendar.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refresh-course-calendar" class="adminCourseCalendarAction" method="refreshCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-course-calendar" class="adminCourseCalendarAction" method="gotoUpdateCourseCalendarPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-course-calendar.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-calendar-update" class="adminCourseCalendarAction" method="updateCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">update-course-calendar</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-calendar-delete" class="adminCourseCalendarAction" method="deleteCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course-calendar</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="copy-course-calendar" class="adminCourseCalendarAction" method="copyCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course-calendar</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-calendar-clone" class="adminCourseCalendarAction" method="addCourseCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">update-course-calendar</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refresh-website" class="websiteAction">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refresh-database" class="migrationAction" method="migrateFromWensiToCCW">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-advertisement" class="adminAdvertisementAction" method="showAdvertisement">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-advertisement.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="advertisement-update" class="adminAdvertisementAction" method="updateAdvertisement">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-advertisement</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-news" class="adminNewsAction" method="gotoAddNewsPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-news.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="news-add" class="adminNewsAction" method="addNews">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-news</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-news" class="adminNewsAction" method="showNews">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-news.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-news" class="adminNewsAction" method="gotoUpdateNewsPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-news.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="news-update" class="adminNewsAction" method="updateNews">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-news</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="news-delete" class="adminNewsAction" method="deleteNews">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-news</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		
+		
+		
+		
+		<action name="add-photo" class="adminPhotoAction" method="gotoAddPhotoPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-photo.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="photo-add" class="adminPhotoAction" method="addPhoto">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-photo</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-photo" class="adminPhotoAction" method="showPhoto">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-photo.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-photo" class="adminPhotoAction" method="gotoUpdatePhotoPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-photo.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="photo-update" class="adminPhotoAction" method="updatePhoto">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-photo</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="photo-delete" class="adminPhotoAction" method="deletePhoto">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-photo</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-public-pending-orders" class="adminPublicOrderAction" method="gotoPublicOrderPendingPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-public-pending-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-public-confirmed-orders" class="adminPublicOrderAction" method="gotoPublicOrderConfirmedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-public-confirmed-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-public-finished-orders" class="adminPublicOrderAction" method="gotoPublicOrderFinishedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-public-finished-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="confirm-public-order" class="adminPublicOrderAction" method="confirmPublicOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-public-pending-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="finish-public-order" class="adminPublicOrderAction" method="finishPublicOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-public-confirmed-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="detail-public-order" class="adminPublicOrderAction" method="detailPublicOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/detail-public-order.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-private-pending-orders" class="adminPrivateOrderAction" method="gotoPrivateOrderPendingPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-private-pending-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-private-confirmed-orders" class="adminPrivateOrderAction" method="gotoPrivateOrderConfirmedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-private-confirmed-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-private-finished-orders" class="adminPrivateOrderAction" method="gotoPrivateOrderFinishedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-private-finished-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="confirm-private-order" class="adminPrivateOrderAction" method="confirmPrivateOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-private-pending-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="finish-private-order" class="adminPrivateOrderAction" method="finishPrivateOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-private-confirmed-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="detail-private-order" class="adminPrivateOrderAction" method="detailPrivateOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/detail-private-order.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-members" class="adminMemberAction" method="showUser">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-members.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="detail-member" class="adminMemberAction" method="detailUser">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/detail-member.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="detail-member-orders" class="adminMemberAction" method="detailUserOrders">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/detail-member-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="conclude-public-order-report" class="adminPublicOrderConclusionAction" method="concludePublicOrderReport">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/conclude-public-order-report.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="conclude-private-order-report" class="adminPrivateOrderConclusionAction" method="concludePrivateOrderReport">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/conclude-private-order-report.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-picture" class="pictureAction" method="gotoAddPicturePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-pictures.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-picture-folder" class="pictureAction" method="addPictureFolder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-pictures</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-pictures" class="pictureAction" method="showPictures">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-pictures.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="delete-picture" class="pictureAction" method="deletePicture">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-pictures</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="goto-send-mail-list" class="adminMailAction" method="gotoMailPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/send-mail-list.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="send-mail-list" class="adminMailAction" method="sendMails">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">goto-send-mail-list</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-category-item" class="adminItemtypeAction" method="gotoAddItemPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-category-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-category-add" class="adminItemtypeAction" method="addCategoryItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-category-item" class="adminItemtypeAction" method="showCategoryItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-category-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-category-item" class="adminItemtypeAction" method="gotoUpdateItemPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-category-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-category-update" class="adminItemtypeAction" method="updateCategoryItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-category-delete" class="adminItemtypeAction" method="deleteCategoryItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-category-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-item" class="adminItemAction" method="gotoAddItemPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-add" class="adminItemAction" method="addItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-item" class="adminItemAction" method="showItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-item" class="adminItemAction" method="gotoUpdateItemPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-item.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-update" class="adminItemAction" method="updateItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-delete" class="adminItemAction" method="deleteItem">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-item</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-item-pending-orders" class="adminItemOrderAction" method="gotoItemOrderPendingPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-item-pending-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-item-confirmed-orders" class="adminItemOrderAction" method="gotoItemOrderConfirmedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-item-confirmed-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-item-finished-orders" class="adminItemOrderAction" method="gotoItemOrderFinishedPage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-item-finished-orders.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="confirm-item-order" class="adminItemOrderAction" method="confirmItemOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-item-pending-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="finish-item-order" class="adminItemOrderAction" method="finishItemOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-item-confirmed-orders</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="detail-item-order" class="adminItemOrderAction" method="detailItemOrder">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/detail-item-order.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="conclude-item-order-report" class="adminItemOrderConclusionAction" method="concludeItemOrderReport">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/conclude-item-order-report.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-order-calendar" class="adminOrderCalendarAction" method="showOrderCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-order-calendar.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refresh-order-calendar" class="adminOrderCalendarAction" method="refreshOrderCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-monthly-order-calendar" class="adminOrderCalendarAction" method="showMonthlyOrderCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-monthly-order-calendar.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="refresh-monthly-order-calendar" class="adminOrderCalendarAction" method="refreshMonthlyOrderCalendar">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="add-course-package" class="adminCoursePackageAction" method="gotoAddCoursePackagePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/add-course-package.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-package-add" class="adminCoursePackageAction" method="addCoursePackage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course-package</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="archives-course-package" class="adminCoursePackageAction" method="showCoursePackage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/archives-course-package.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="update-course-package" class="adminCoursePackageAction" method="gotoUpdateCoursePackagePage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/edit-course-package.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-package-update" class="adminCoursePackageAction" method="updateCoursePackage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course-package</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="course-package-delete" class="adminCoursePackageAction" method="deleteCoursePackage">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">archives-course-package</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="calendar-template" class="adminCalendarTemplateAction" method="gotoCalendarTemplate">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/_administrator/calendar-template.jsp</result>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="get-calendar-template" class="adminCalendarTemplateAction" method="getCalendarTemplate">
+			<interceptor-ref name="adminInterceptorStack"></interceptor-ref>
+			<result name="login">/WEB-INF/jsp/_administrator/login.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>

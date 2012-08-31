@@ -1,0 +1,11 @@
+﻿<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>こんにちは, #nickname#</div>
+<div>登録が成功しました、中華料理教室の仲間になられたあなたを大歓迎いたします！</div>
+<div>登録名: <span style="color:red">#userId#</span></div>
+<div>パスワード: <span style="color:red">#password#</span></div>
+<div>ユーザーセンターで登録内容をご記入ください。</div>
+<div>中華料理教室アシスタント</div>
+</body>
+</html>

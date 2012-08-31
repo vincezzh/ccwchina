@@ -1,0 +1,73 @@
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	checkLogin();
+	insertTitle();
+});
+
+function checkLogin() {
+	jQuery.ajax({
+	   type: "POST",
+	   url: "/user/check-login.htm",
+	   success: function(content) {
+	   		if(content != '') {
+	   			jQuery('#user_showname').html(content + ", ");
+	   			jQuery('#user_signin').hide();
+	   			jQuery('#user_showname').show();
+	   			jQuery('#user_signout').show();
+	   		}
+		}
+	});
+}
+
+function insertTitle() {
+	jQuery.ajax({
+	   type: "POST",
+	   url: "/common/insert-title.htm",
+	   success: function(content) {
+	   		var titles = content.split("_");
+	   		for(i=1; i<=titles.length; i++) {
+	   			if(i != 8)
+	   				jQuery('#title' + i).html(titles[i-1]);
+	   			else
+	   				jQuery('#title8').attr('title', titles[i-1]);
+	   		}
+		}
+	});
+}
+</script>
+
+<script language='JavaScript' src="/js_base/kf.js" type=text/javascript></script>
+
+<div class="top_bg font_samll_3">
+	<div style="float:left;">
+		<a href="/others/mail.htm">
+			<img id="title8" border="0" src="/images/common/mail.jpg" height="35" alt="Add to mail list"/>
+		</a>
+	</div>
+	<div style="float:left;margin:3px 0 0 20px;">
+		<a href="/select-language.htm?language=en"><img src="/images/common/ukicon.png" height="20" alt="English"/></a>
+		<a href="/select-language.htm?language=ja"><img src="/images/common/worldwide_jp.png" height="20" alt="Japaness"/></a>
+		<a href="/select-language.htm?language=zh"><img src="/images/common/china.jpg" height="20" alt="Chinese"/></a>
+	</div>
+	<div style="float:right">
+		<span id="user_signin">
+			<span id="title1"></span> 
+			<a href="/user/sign-in.htm"><span id="title2"></span></a> | 
+			<a href="/user/sign-up.htm"><span id="title3"></span></a>
+		</span>
+		<span id="user_showname" style="display:none;"></span><span id="user_signout" style="display:none;">
+			<span id="title4"></span> 
+			<a href="/user/orders.htm"><span id="title5"></span></a> | 
+			<a href="/user/information.htm"><span id="title6"></span></a> | 
+			<a href="/user/sign-out.htm"><span id="title7"></span></a>
+		</span>
+	</div>
+</div>
+<div class="top_adv center">
+	<a href="${entity.advertisment.advertisementLink}" target="_blank"><img src="${entity.advertisment.advertisementPath}" alt="${entity.advertisment.advertisementTitle}" width="728" height="91"/></a>
+</div>
+<div class="center">
+	<div class="left logo"><a href="/index.htm"><img src="/images/framework/logo.jpg" /></a></div>
+    <div class="right logoright"><img src="/images/framework/logo-right.jpg" /></div>
+</div>
+<div class="center both logo-bottom"><img src="/images/framework/logo_bottom.jpg" /></div>

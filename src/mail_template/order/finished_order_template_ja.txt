@@ -1,0 +1,10 @@
+﻿<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div>こんにちは, #name#</div>
+	<div>あなたのご予約(ご予約番号: <span style="color:red">#orderId#</span>)完了し、以下が確定しました。<span style="color:red">#points#</span>返点, 下次订课时可以抵扣上课费用。</div>
+	<div>中華料理教室アシスタント</div>
+</body>
+</html>

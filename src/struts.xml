@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true"/>
+	<constant name="struts.configuration.xml.reload" value="true"/>
+	<constant name="struts.action.extension" value="htm"/>
+	
+	<package name="struts-default-custom" extends="struts-default">       
+		<interceptors>
+			<interceptor name="defaultLanguage" class ="com.ccw.interceptor.DefaultLanguageInterceptor"/>
+			
+			<interceptor-stack name="struts-default-language">
+				<interceptor-ref name="defaultLanguage"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="struts-default-language"></default-interceptor-ref> 
+	</package>
+
+	<include file="administrator.xml"/>
+	<include file="course.xml"/>
+	<include file="order.xml"/>
+	<include file="others.xml"/>
+	<include file="news.xml"/>
+	<include file="main.xml"/>
+	<include file="user.xml"/>
+	<include file="common.xml"/>
+	<include file="store.xml"/>
+</struts>

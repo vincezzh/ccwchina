@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="${entity.item.searchKeyWords}" />
+<meta name="description" content="${entity.item.searchDescription}" />
+<meta name="author" content="www.chinesecookingworkshop.com, Chinese Cooking Workshop" />
+<title>${entity.item.itemNameEn}</title>
+<link rel="stylesheet" type="text/css" href="/css/csss.css" />
+<link rel="stylesheet" type="text/css" href="/css/csss_plus.css" />
+<link rel="stylesheet" type="text/css" href="/css/top_nav.css" />
+
+<script type="text/javascript" src="/js_base/jquery-1.4.2.js" ></script>
+
+<link rel="stylesheet" href="/js_base/theme/jquery.ui.all.css"> 
+<script src="/js_base/ui/jquery.ui.core.js"></script> 
+<script src="/js_base/ui/jquery.ui.widget.js"></script> 
+<script src="/js_base/ui/jquery.ui.mouse.js"></script> 
+<script src="/js_base/ui/jquery.ui.draggable.js"></script> 
+<script src="/js_base/ui/jquery.ui.position.js"></script> 
+<script src="/js_base/ui/jquery.ui.resizable.js"></script> 
+<script src="/js_base/ui/jquery.ui.dialog.js"></script>
+
+<link rel="stylesheet" href="/plugin/validation/css/validationEngine.jquery.css" type="text/css"/>
+
+<script type="text/javascript">
+var colorIdCenter = "center_market";
+</script>
+
+<script type="text/javascript">
+var language = "";
+jQuery(document).ready(function() {
+	jQuery.ajax({
+	   type: "POST",
+	   url: "/check-language.htm",
+	   success: function(content) {
+	   		if(content == 'ja') {
+	   			jQuery('.jaLanguage').show();
+	   		}else if(content == 'zh') {
+	   			jQuery('.zhLanguage').show();
+	   		}else {
+	   			jQuery('.enLanguage').show();
+	   		}
+	   		language = content;
+	   		
+			jQuery.getScript("/plugin/validation/js/jquery.validationEngine-" + content + ".js", function(){
+				jQuery.getScript("/plugin/validation/js/jquery.validationEngine.js", function(){
+					jQuery("#form-item").validationEngine();
+				});
+			});
+		}
+	});
+	
+	$("#confirm-dialog").dialog({
+		autoOpen: false,
+		height: 250,
+		width: 350,
+		modal: true
+	});
+});
+
+function openConfirm() {
+	$("#confirm-dialog").dialog("open");
+	jQuery.ajax({
+	   type: "POST",
+	   url: "/user/fill-form.htm",
+	   success: function(content) {
+	   		if(content != '') {
+	   			var fields = content.split("_and_");
+	   			$("#item-contact").val(fields[0]);
+	   			$("#item-email").val(fields[1]);
+	   			$("#item-cellphone").val(fields[2]);
+	   		}
+		}
+	});
+}
+
+function closeConfirm() {
+	$("#confirm-dialog").dialog("close");
+}
+</script>
+</head>
+
+<body class="shop_overview features">
+${entity.toptitle}
+		
+<div class="shop_main">
+	<div class="shop_margin">
+	
+		<div class="enLanguage" style="display:none;">
+			<div>
+				<div class="shop_title left"><span class="color_green">CCW</span> in Market</div>
+				<div class="right"><a href="/store/item-list.htm"><img src="/images/common/market.png" height="30" class="hand" alt="CCW Market"/></a></div>
+				<br class="both"/>
+				<div class="shop_intro">${entity.item.itemNameEn}</div>
+			</div>
+			<div class="shop_buy left">
+				<h1 class="color_red" style="margin:0 0 30px 80px;">${entity.item.price} RMB</h1>
+				<img src="/images/common/buy-now.jpg" height="80" alt="Buy" class="hand" onclick="openConfirm()">
+				<div class="shop_words">
+					<p class="color_blue" style="margin:50px 0 20px 0;"><strong>Be quick! <br> Start to enjoy your life.</strong></p>
+					<p><span class="color_purple">Start Date: </span>${entity.item.startTime}</p>
+					<p><span class="color_purple">End Date: </span>${entity.item.endTime}</p>
+					<p style="margin:30px 0 0 0;"><span class="color_red"><strong>${entity.item.saledNumber}</strong></span> people have got it</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="jaLanguage" style="display:none;">
+			<div>
+				<div class="shop_title left"><span class="color_green">CCW</span> in Market</div>
+				<div class="right"><a href="/store/item-list.htm"><img src="/images/common/market.png" height="30" alt="CCW Market"/></a></div>
+				<br class="both"/>
+				<div class="shop_intro">${entity.item.itemNameJp}</div>
+			</div>
+			<div class="shop_buy left">
+				<h1 class="color_red" style="margin:0 0 30px 80px;">${entity.item.price} RMB</h1>
+				<img src="/images/common/buy-now.jpg" height="80" alt="Buy Now" class="hand" onclick="openConfirm()">
+				<div class="shop_words">
+					<p class="color_blue" style="margin:50px 0 20px 0;"><strong>ぜひぜひ！<br> あなたなりの生活を始めませんか。</strong></p>
+					<p><span class="color_purple">開始時間: </span>${entity.item.startTime}</p>
+					<p><span class="color_purple">終了時間: </span>${entity.item.endTime}</p>
+					<p style="margin:30px 0 0 0;"><span class="color_red"><strong>${entity.item.saledNumber}</strong></span> 名の方がすでに購入されています</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="zhLanguage" style="display:none;">
+			<div>
+				<div class="shop_title left"><span class="color_green">CCW</span> in Market</div>
+				<div class="right"><a href="/store/item-list.htm"><img src="/images/common/market.png" height="30" alt="CCW Market"/></a></div>
+				<br class="both"/>
+				<div class="shop_intro">${entity.item.itemNameCn}</div>
+			</div>
+			<div class="shop_buy left">
+				<h1 class="color_red" style="margin:0 0 30px 80px;">${entity.item.price} RMB</h1>
+				<img src="/images/common/buy-now.jpg" height="80" alt="Buy Now" class="hand" onclick="openConfirm()">
+				<div class="shop_words">
+					<p class="color_blue" style="margin:50px 0 20px 0;"><strong>快来! <br> 开始享受你的生活。</strong></p>
+					<p><span class="color_purple">开始时间: </span>${entity.item.startTime}</p>
+					<p><span class="color_purple">结束时间: </span>${entity.item.endTime}</p>
+					<p style="margin:30px 0 0 0;"><span class="color_red"><strong>${entity.item.saledNumber}</strong></span> 人已经参加了购买</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="right">
+			<div><img src="${entity.item.pictureTwo}" alt="${entity.item.itemNameEn}" width="600" height="600"></div>
+		</div>
+		<br class="both"/>
+		<div class="shop_desc">
+			<div class="shop_desc_block1 left">
+				<h3>${entity.item.itemNameEn}</h3>
+				<p>${entity.item.itemDescriptionEn}</p>
+			</div>
+			<div class="shop_desc_block1 left">
+				<h3>${entity.item.itemNameJp}</h3>
+				<p>${entity.item.itemDescriptionJp}</p>
+			</div>
+			<div class="shop_desc_block3 left">
+				<h3>${entity.item.itemNameCn}</h3>
+				<p>${entity.item.itemDescriptionCn}</p>
+			</div>
+		</div>
+		<br class="both"/>
+		
+	</div>
+</div>
+
+<div id="confirm-dialog" title="Confirm"> 
+	<form id="form-item" action="/order/book-item.htm" method="post">
+		<div>
+			<div class="left">
+				<span class="enLanguage" style="display:none;">Contact Person:</span>
+				<span class="jaLanguage" style="display:none;">連絡先:</span>
+				<span class="zhLanguage" style="display:none;">携帯:</span>
+			</div>
+			<div class="right">
+				<input type="text" id="item-contact" name="contactPerson" value="" size="18" class="validate[required] text-input"/>
+			</div>
+		</div>
+		<br class="both"/>
+		<div style="margin-top:20px;">
+			<div class="left">Email:</div>
+			<div class="right">
+				<input type="text" id="item-email" name="email" value="" size="18" class="validate[required,custom[email]] text-input"/>
+			</div>
+		</div>
+		<br class="both"/>
+		<div style="margin-top:20px;">
+			<div class="left">
+				<span class="enLanguage" style="display:none;">Cellphone:</span>
+				<span class="jaLanguage" style="display:none;">手机:</span>
+				<span class="zhLanguage" style="display:none;">手机:</span>
+			</div>
+			<div class="right">
+				<input type="text" id="item-cellphone" name="cellphone" value="" size="18" class="validate[required] text-input"/>
+			</div>
+		</div>
+		<br class="both"/>
+		<div style="margin-top:20px;">
+			<div class="right">
+				<input type="submit" value="Buy"/>
+				<input type="button" value="Cancel" onclick="closeConfirm()"/>
+			</div>
+		</div>
+		<input type="hidden" name="itemId" value="${entity.item.itemId}"/>
+	</form>
+</div>
+
+${entity.bottomfoot}
+</body>
+</html>

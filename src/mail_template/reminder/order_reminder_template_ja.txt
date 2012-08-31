@@ -1,0 +1,10 @@
+﻿<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>こんにちは, #name#</div>
+<div>ご予約いただいた授業をお忘れのないよう、授業時間は<span style="color:red">#time#</span></div>
+<div>ご予約番号: <span style="color:red">#orderId#</span></div>
+<div>キッチン: <span style="color:red">#location#</span></div>
+<div>中華料理教室アシスタント</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>你好, #name#</div>
+<div>请别忘记参加你已经预定的课程，上课时间<span style="color:red">#time#</span></div>
+<div>订单编号: <span style="color:red">#orderId#</span></div>
+<div>厨房: <span style="color:red">#location#</span></div>
+<div>中华料理教室助手</div>
+</body>
+</html>

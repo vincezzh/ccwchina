@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="keywords" content="${entity.course.searchKeyWords}" />
+<meta name="description" content="${entity.course.searchDescription}" />
+<meta name="author" content="www.chinesecookingworkshop.com, Chinese Cooking Workshop"/>
+<title>${entity.course.courseNameEn}</title>
+<link rel="stylesheet" type="text/css" href="/css/csss.css" />
+<link rel="stylesheet" type="text/css" href="/css/csss_plus.css" />
+<link rel="stylesheet" type="text/css" href="/css/top_nav.css" />
+
+<script type="text/javascript" src="/js_base/jquery-1.4.2.js" ></script>
+<script src="/plugin/uniform/jquery.uniform.js" type="text/javascript"></script>
+<link rel="stylesheet" href="/plugin/uniform/css/uniform.default.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	$("input, select, button, textarea").uniform();
+});
+</script>
+<script type="text/javascript">
+var language = "";
+jQuery(document).ready(function() {
+	jQuery.ajax({
+	   type: "POST",
+	   url: "/check-language.htm",
+	   success: function(content) {
+	   		if(content == 'ja') {
+	   			jQuery('#japaness_version').show();
+	   			language = content;
+	   		}else if(content == 'zh') {
+	   			jQuery('#chinese_version').show();
+	   			language = content;
+	   		}else {
+	   			jQuery('#english_version').show();
+	   			language = content;
+	   		}
+		}
+	});
+});
+
+var feedback_en = "There is no class in 30 days in this kitchen.";
+var feedback_ja = "30日以内でこちらのキッチンに授業はありません";
+var feedback_zh = "30天内该厨房没有课程";
+function getClasses(kitchen) {
+	if(kitchen != "") {
+		jQuery.ajax({
+		   type: "POST",
+		   url: "/course/check-course-calendar.htm",
+		   data: "courseId=${entity.course.courseId}&courseLocationId=" + kitchen,
+		   success: function(content) {
+		   		if(content != "") {
+		   			jQuery("#result_" + language).html(content);
+		   		}else {
+		   			jQuery("#result_" + language).html(eval("feedback_" + language));
+		   		}
+			}
+		});
+	}else {
+		jQuery("#result_" + language).html("");
+	}
+}
+</script>
+</head>
+
+<body>
+${entity.toptitle}
+
+<div class="center both">
+	
+	<div id="english_version" style="display:none">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tbody>
+				<tr>
+					<td align="center" valign="top" width="228">
+						<div style="overflow: hidden; width: 228px;">
+							<img src="${entity.course.pictureTwo}" width="228" alt="${entity.course.courseNameEn}" title="${entity.course.courseNameEn}"/>
+						</div>
+					</td>
+					<td width="25">&nbsp;</td>
+					<td valign="top">
+					<table border="0" cellpadding="3" cellspacing="0" width="100%">
+						<tbody>
+							<tr>
+								<td>
+									<h3>${entity.course.courseNameEn}</h3>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<p>Choose kitchen to find this class and book it:</p>
+									<select onchange="getClasses(this.value)">
+										<option value="">please select</option>
+										#foreach($location in ${entity.locationList})
+											<option value="$location.courseLocationId">$location.courseLocationName</option>
+										#end
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="result_en"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><br></p>
+		<h2>Direction</h2>
+		<hr/>
+		${entity.course.courseDescriptionEn}
+	</div>
+	
+	<div id="japaness_version" style="display:none">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tbody>
+				<tr>
+					<td align="center" valign="top" width="228">
+						<div style="overflow: hidden; width: 228px;">
+							<img src="${entity.course.pictureTwo}" width="228" alt="${entity.course.courseNameJp}" title="${entity.course.courseNameJp}"/>
+						</div>
+					</td>
+					<td width="25">&nbsp;</td>
+					<td valign="top">
+					<table border="0" cellpadding="3" cellspacing="0" width="100%">
+						<tbody>
+							<tr>
+								<td>
+									<h3>${entity.course.courseNameJp}</h3>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<p>キッチンと授業を選んでご予約:</p>
+									<select onchange="getClasses(this.value)">
+										<option value="">選択してください</option>
+										#foreach($location in ${entity.locationList})
+											<option value="$location.courseLocationId">$location.courseLocationName</option>
+										#end
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="result_ja"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><br></p>
+		<h2>Direction</h2>
+		<hr/>
+		${entity.course.courseDescriptionJp}
+	</div>
+
+	<div id="chinese_version" style="display:none">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tbody>
+				<tr>
+					<td align="center" valign="top" width="228">
+						<div style="overflow: hidden; width: 228px;">
+							<img src="${entity.course.pictureTwo}" width="228" alt="${entity.course.courseNameCn}" title="${entity.course.courseNameCn}"/>
+						</div>
+					</td>
+					<td width="25">&nbsp;</td>
+					<td valign="top">
+					<table border="0" cellpadding="3" cellspacing="0" width="100%">
+						<tbody>
+							<tr>
+								<td>
+									<h3>${entity.course.courseNameCn}</h3>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<p>选择厨房并且预订该课程:</p>
+									<select onchange="getClasses(this.value)">
+										<option value="">请选择</option>
+										#foreach($location in ${entity.locationList})
+											<option value="$location.courseLocationId">$location.courseLocationName</option>
+										#end
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div id="result_zh"></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><br></p>
+		<h2>Direction</h2>
+		<hr/>
+		${entity.course.courseDescriptionCn}
+	</div>
+	
+</div>
+
+${entity.bottomfoot}
+</body>
+</html>

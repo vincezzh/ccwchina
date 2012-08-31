@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="main" extends="struts-default-custom" namespace="/">
+		<action name="index" class="mainAction" method="gotoMainPage">
+        	<result name="success">/WEB-INF/jsp/main/index.jsp</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="select-language" class="mainAction" method="selectLanguage">
+        	<result name="success" type="redirect">/index.htm</result>
+        	<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="check-language" class="mainAction" method="checkLanguage">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<!-- MeiTouNao -->
+		<action name="notifications" class="meitounaoNotificationsAction" method="fetchTodayTomorrowNotifications" >  
+            <result name="error">/WEB-INF/jsp/common/error.jsp</result>
+        </action> 
+    </package>
+</struts>

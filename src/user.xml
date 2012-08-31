@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="user" extends="struts-default-custom" namespace="/user">
+		<interceptors>
+			<interceptor name="auth" class ="com.ccw.interceptor.AuthorizationInterceptor"/>
+			
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="auth"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="check-login" class="loginAction" method="isLogin">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="fill-form" class="loginAction" method="fillForm">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="sign-in" class="loginAction" method="gotoSignInSignUp">
+			<result name="success">/WEB-INF/jsp/user/sign-in-and-sign-up.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="sign-up" class="loginAction" method="gotoSignInSignUp">
+			<result name="success">/WEB-INF/jsp/user/sign-in-and-sign-up.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="login" class="loginAction" method="login">
+			<result name="success" type="redirect">/index.htm</result>
+			<result name="input">/WEB-INF/jsp/user/sign-in-and-sign-up.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="check-userId" class="loginAction" method="checkUserExisted">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="register" class="loginAction" method="register">
+			<result name="success" type="chain">login</result>
+			<result name="input">/WEB-INF/jsp/user/sign-in-and-sign-up.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="sign-out" class="loginAction" method="logout">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success" type="redirect">/index.htm</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="retrieve-password" class="loginAction" method="retrievePassword">
+			<result name="success" type="chain">sign-in</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="information" class="informationAction" method="gotoInformation">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/edit-information.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="edit-information" class="informationAction" method="editInformation">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">information</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="edit-password" class="informationAction" method="editPassword">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success" type="chain">information</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="orders" class="ordersAction" method="getPublicOrder">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/public-order-list.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="public-orders" class="ordersAction" method="getPublicOrder">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/public-order-list.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="public-orders-history" class="ordersAction" method="getPublicOrderHistory">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/public-order-list-history.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="private-orders" class="ordersAction" method="getPrivateOrder">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/private-order-list.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="private-orders-history" class="ordersAction" method="getPrivateOrderHistory">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/private-order-list-history.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-orders" class="ordersAction" method="getItemOrder">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/item-order-list.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-orders-history" class="ordersAction" method="getItemOrderHistory">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/item-order-list-history.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="public-order-detail" class="ordersAction" method="getPublicOrderDetail">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/public-order-detail.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="private-order-detail" class="ordersAction" method="getPrivateOrderDetail">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/private-order-detail.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="item-order-detail" class="ordersAction" method="getItemOrderDetail">
+			<interceptor-ref name="myInterceptorStack"></interceptor-ref>
+			<result name="success">/WEB-INF/jsp/user/item-order-detail.jsp</result>
+			<result name="login" type="redirect">/index.htm</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>

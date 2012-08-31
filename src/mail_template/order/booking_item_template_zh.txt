@@ -1,0 +1,12 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div>你好, #name#</div>
+	<div>请记住你的订单号，它能帮你检查订单细节。</div>
+	<div>商品名称: <span style="color:red">#itemName#</span></div>
+	<div>订单编号: <span style="color:red">#orderId#</span></div>
+	<div>中华料理教室助手</div>
+</body>
+</html>

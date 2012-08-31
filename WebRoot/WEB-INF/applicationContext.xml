@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	 	
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+	
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="MYSQL"/>
+				<property name="showSql" value="true"/>
+			</bean>
+		</property>
+	</bean> 
+	
+	<!-- No Connection Pool configuration
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/ccw?characterEncoding=utf8" />
+        <property name="username" value="root" />
+        <property name="password" value="admin" />
+    </bean>
+     -->
+    
+    <!-- Connection Pool configuration -->
+    <bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource" destroy-method="close"> 
+      <property name="alias"><value>CCW_Pool</value></property> 
+      <property name="driver"><value>com.mysql.jdbc.Driver</value></property> 
+      <property name="driverUrl"><value>jdbc:mysql://localhost:3306/ccwchina?characterEncoding=utf8</value></property> 
+      <property name="user" value="root"></property> 
+      <property name="password" value="admin"></property> 
+
+      <property name="prototypeCount" value="30"></property> 
+      <property name="maximumConnectionCount" value="90"></property> 
+      <property name="minimumConnectionCount" value="30"></property>
+
+      <property name="trace" value="true"></property> 
+      <property name="verbose" value="true"></property> 
+    </bean>
+    
+    
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean> 
+    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <!-- DAO classes -->
+    <bean id="userDao" class="com.ccw.dao.UserDaoImp"/>
+    <bean id="courseDao" class="com.ccw.dao.CourseDaoImp"/>
+    <bean id="orderDao" class="com.ccw.dao.OrderDaoImp"/>
+    <bean id="commonDao" class="com.ccw.dao.CommonDaoImp"/>
+    <bean id="itemDao" class="com.ccw.dao.ItemDaoImp"/>
+    <bean id="migrationDao" class="com.ccw.dao.MigrationDaoImp"/>
+
+	<!-- Administrator Actions -->
+	<bean name="adminAction" class="com.ccw.action.admin.user.AdminAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<bean name="adminTypeAction" class="com.ccw.action.admin.common.AdminTypeAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminCoursetypeAction" class="com.ccw.action.admin.course.AdminCoursetypeAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminCourseAction" class="com.ccw.action.admin.course.AdminCourseAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminCourseCalendarAction" class="com.ccw.action.admin.course.AdminCourseCalendarAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminOrderCalendarAction" class="com.ccw.action.admin.order.AdminOrderCalendarAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="websiteAction" class="com.ccw.action.admin.common.WebsiteAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+		<property name="commonDao" ref="commonDao" />
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	
+	<bean name="migrationAction" class="com.ccw.action.admin.migration.MigrationAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+		<property name="commonDao" ref="commonDao" />
+		<property name="courseDao" ref="courseDao" />
+		<property name="migrationDao" ref="migrationDao" />
+	</bean>
+	
+	<bean name="adminAdvertisementAction" class="com.ccw.action.admin.advertisement.AdminAdvertisementAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<bean name="adminNewsAction" class="com.ccw.action.admin.news.AdminNewsAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<bean name="adminPhotoAction" class="com.ccw.action.admin.photo.AdminPhotoAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<bean name="adminPublicOrderAction" class="com.ccw.action.admin.order.AdminPublicOrderAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<bean name="adminPrivateOrderAction" class="com.ccw.action.admin.order.AdminPrivateOrderAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminMemberAction" class="com.ccw.action.admin.user.AdminMemberAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="adminPublicOrderConclusionAction" class="com.ccw.action.admin.order.AdminPublicOrderConclusionAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="adminPrivateOrderConclusionAction" class="com.ccw.action.admin.order.AdminPrivateOrderConclusionAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="pictureAction" class="com.ccw.action.admin.picture.PictureAction" scope="prototype">
+	</bean>
+	
+	<bean name="adminMailAction" class="com.ccw.action.admin.mail.AdminMailAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<bean name="adminItemtypeAction" class="com.ccw.action.admin.market.AdminItemtypeAction" scope="prototype">
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	
+	<bean name="adminItemAction" class="com.ccw.action.admin.market.AdminItemAction" scope="prototype">
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	
+	<bean name="adminItemOrderAction" class="com.ccw.action.admin.order.AdminItemOrderAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="adminItemOrderConclusionAction" class="com.ccw.action.admin.order.AdminItemOrderConclusionAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="adminCoursePackageAction" class="com.ccw.action.admin.course.AdminCoursePackageAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="adminCalendarTemplateAction" class="com.ccw.action.admin.calendar.AdminCalendarTemplateAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<!-- Main Actions -->
+	<bean name="mainAction" class="com.ccw.action.main.MainAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<!-- Course Actions -->
+	<bean name="courseListAction" class="com.ccw.action.course.CourseListAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="courseContentListAction" class="com.ccw.action.course.CourseContentListAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<!-- Order Actions -->
+	<bean name="publicOrderAction" class="com.ccw.action.order.PublicOrderAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="privateOrderAction" class="com.ccw.action.order.PrivateOrderAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+	</bean>
+	
+	<bean name="itemOrderAction" class="com.ccw.action.order.ItemOrderAction">
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	
+	<!-- User Actions -->
+	<bean name="loginAction" class="com.ccw.action.user.LoginAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="informationAction" class="com.ccw.action.user.InformationAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<bean name="ordersAction" class="com.ccw.action.user.OrdersAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<!-- Photo Actions -->
+	<bean name="photoAction" class="com.ccw.action.photo.PhotoAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<!-- News Actions -->
+	<bean name="newsAction" class="com.ccw.action.news.NewsAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<!-- Mail Actions -->
+	<bean name="mailAction" class="com.ccw.action.mail.MailAction" scope="prototype">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<!-- Common Actions -->
+	<bean name="titleAction" class="com.ccw.action.common.TitleAction" scope="prototype">
+	</bean>
+	
+	<bean name="uploadAction" class="com.ccw.action.common.UploadAction" scope="prototype">
+	</bean>
+	
+	<bean name="workCenter" class="com.ccw.common.WorkCenter">
+		<property name="userDao" ref="userDao" />
+		<property name="orderDao" ref="orderDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
+	
+	<!-- Store Actions -->
+	<bean name="itemListAction" class="com.ccw.action.store.ItemListAction">
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	
+	<!-- MeiTouNao Actions -->
+	<bean name="meitounaoNotificationsAction" class="com.vincezzh.meitounao.action.NotificationsAction">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+	
+	<bean name="MeiTouNaoCenter" class="com.vincezzh.meitounao.MeiTouNaoCenter">
+		<property name="commonDao" ref="commonDao" />
+	</bean>
+</beans>

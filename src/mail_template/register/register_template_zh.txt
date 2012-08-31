@@ -1,0 +1,11 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>你好, #nickname#</div>
+<div>您已经注册成功，热烈欢迎您称谓中华料理教室中重要的一员。</div>
+<div>用户名: <span style="color:red">#userId#</span></div>
+<div>密码: <span style="color:red">#password#</span></div>
+<div>请尽快去用户中心填写你的信息，它对我们非常重要</div>
+<div>中华料理教室助手</div>
+</body>
+</html>

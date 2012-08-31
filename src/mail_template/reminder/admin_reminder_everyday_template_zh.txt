@@ -1,0 +1,32 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>今日上课学生名单：</div>
+<div>日期：#date#</div>
+<div>公共课程</div>
+<table width="600">
+	<tr>
+		<td width="200">上课地点</td>
+		<td width="200">上课时间</td>
+		<td width="200">联系人</td>
+		<td width="200">手机</td>
+		<td width="200">email</td>
+		<td width="200">人数</td>
+	</tr>
+	#public_content#
+</table>
+<div>私人课程</div>
+<table width="600">
+	<tr>
+		<td width="200">上课地点</td>
+		<td width="200">上课时间</td>
+		<td width="200">联系人</td>
+		<td width="200">手机</td>
+		<td width="200">email</td>
+		<td width="200">人数</td>
+	</tr>
+	#private_content#
+</table>
+<div>From: CCW AUTO ROBOT</div>
+</body>
+</html>

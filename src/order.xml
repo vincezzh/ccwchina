@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="order" extends="struts-default-custom" namespace="/order">
+		<action name="go-to-public-order" class="publicOrderAction" method="gotoPublicOrderPage">
+        	<result name="success">/WEB-INF/jsp/order/publicOrder.jsp</result>
+        	<result name="input">/WEB-INF/jsp/order/classExpired.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="go-to-private-order" class="privateOrderAction" method="gotoPrivateOrderPage">
+        	<result name="success">/WEB-INF/jsp/order/privateOrder.jsp</result>
+        	<result name="input">/WEB-INF/jsp/order/classExpired.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="book-public-order" class="publicOrderAction" method="bookPublicOrder">
+        	<result name="success">/WEB-INF/jsp/order/orderSuccessful.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="book-private-order" class="privateOrderAction" method="bookPrivateOrder">
+        	<result name="success">/WEB-INF/jsp/order/orderSuccessful.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="book-item" class="itemOrderAction" method="bookItem">
+        	<result name="success">/WEB-INF/jsp/order/itemSuccessful.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="mail-public-order" class="publicOrderAction" method="mailPublicOrderPage">
+        	<result name="success">/WEB-INF/jsp/order/publicOrder.jsp</result>
+        	<result name="input">/WEB-INF/jsp/order/classExpired.jsp</result>
+        	<result name="login">/WEB-INF/jsp/order/userNotExisted.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="mail-private-order" class="privateOrderAction" method="mailPrivateOrderPage">
+        	<result name="success">/WEB-INF/jsp/order/privateOrder.jsp</result>
+        	<result name="input">/WEB-INF/jsp/order/classExpired.jsp</result>
+        	<result name="login">/WEB-INF/jsp/order/userNotExisted.jsp</result>
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>

@@ -1,0 +1,10 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<div>Dear, #name#</div>
+	<div>Your Order(order id: <span style="color:red">#orderId#</span>) has been confirmed, please don't forget to attend our lesson.</div>
+	<div>CCW Assistant</div>
+</body>
+</html>

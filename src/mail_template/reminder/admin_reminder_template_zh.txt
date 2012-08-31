@@ -1,0 +1,16 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<body>
+<div>通知</div>
+<div>有客户在 <span style="color:red">#bookingTime#</span>下订单啦，赶快去审批一下。</div>
+<div>#orderType#</div>
+<div>厨房: #kitchen#</div>
+<div>上课时间: #date# #time#</div>
+<div>人数: #number#</div>
+<div>课程类型: #classtype#</div>
+<div>联系人: #name#</div>
+<div>电话: #cellphone#</div>
+<div>email: #email#</div>
+<div>From: CCW AUTO ROBOT</div>
+</body>
+</html>

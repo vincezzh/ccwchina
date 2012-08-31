@@ -1,0 +1,190 @@
+<div class="center bottom_nav">
+	<div><img src="/images/framework/bottom.jpg" width="258" height="30" /></div>
+    <ul>
+    	<li class="b_li_1">
+        	<div><span class="color_green">CCW</span> in news</div>
+
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/news/news-list.htm?year=2011">2011</a>
+            	</li>
+                <li class="b_li_2 font_samll">
+                	<a href="/news/news-list.htm?year=2010">2010</a>
+                </li>
+                <li class="b_li_2 font_samll">
+                	<a href="/news/news-list.htm?year=2009">2009</a>
+                </li>
+            </ul>
+            <div style="margin-top:10px;"><span class="color_blue">About ccw</span></div>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/others/founder.htm">founder</a>
+            	</li>
+                <li class="b_li_2 font_samll">
+                	<a href="/others/team.htm">team</a>
+                </li>
+                <li class="b_li_2 font_samll">
+                	<a href="/others/kitchen.htm">kitchen</a>
+                </li>
+                <li class="b_li_2 font_samll">
+                	<a href="/others/photos.htm">photo</a>
+                </li>
+                <li class="b_li_2 font_samll">
+                	<a href="/others/faqs.htm">FAQs</a>
+                </li>
+                <li class="b_li_2 font_samll">
+                	<a href="/others/contact.htm">contact</a>
+                </li>
+            </ul>
+        </li>
+        
+        <li class="b_li_1">
+        	<div><span class="color_purple">Course</span></div>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/course/course-desc.htm?trunk=2">chinese wok course</a>
+            	</li>
+                <ul class="color_gray">
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=6">most popular</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=7">impress your guest</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=8">fresh in season</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=9">cook local</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=10">secret revealed</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=2&branch=11">authentic west</a>
+                	</li>
+                </ul>
+            </ul>
+            <ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/course/course-desc.htm?trunk=1">chinese dim sum course</a>
+            	</li>
+                <ul class="color_gray">
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=1&branch=1">must try</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=1&branch=2">street food</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=1&branch=3">challenge yourself</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=1&branch=4">young chef</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=1&branch=5">holiday trea</a>
+                	</li>
+                </ul>
+            </ul>
+        </li>
+        
+        <li class="b_li_1">
+        	<div><span class="color_purple">Course</span></div>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="http://www.bakerykitchen.org" target="_blank">bakery course</a>
+            	</li>
+            </ul>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/course/course-desc.htm?trunk=7">international course</a>
+            	</li>
+                <ul class="color_gray">
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=7&branch=12">little Indian</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=7&branch=13">Italian dinner in 30 mins</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=7&branch=14">simply Thai</a>
+                	</li>
+                </ul>
+            </ul>
+            <ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/course/course-desc.htm?trunk=8">cooking events</a>
+            	</li>
+                <ul class="color_gray">
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=15">wet market tour</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=16">dinning with the chef</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=17">open kitchen</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=18">improve your cooking skills</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=19">recipes book</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=20">wine with chinese food</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=21">ready for college</a>
+                	</li>
+                	<li class="b_li_3 font_samll">
+                		<a href="/course/course-desc.htm?trunk=8&branch=22">food network</a>
+                	</li>
+                </ul>
+            </ul>
+        </li>
+        
+        <li class="b_li_1">
+        	<div><span class="color_red">Contact</span></div>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">
+            		<a href="/others/kitchen.htm">kitchen map</a>
+            	</li>
+                <li class="b_li_2 font_samll">
+					<a href="/others/contact.htm">contact details</a>
+				</li>
+                <li class="b_li_2 font_samll">
+					<a href="/others/kitchen.htm">kitchen hours</a>
+				</li>
+            </ul>
+            
+        	<div style="margin-top:10px;"><span class="color_other">Other</span></div>
+        	<ul class="color_gray">
+            	<li class="b_li_2 font_samll">cooking community</li>
+                <li class="b_li_2 font_samll">terms and conditions</li>
+                <li class="b_li_2 font_samll">privacy policy</li>
+                <li class="b_li_2 font_samll">customers services</li>
+                <li class="b_li_2 font_samll">advertise</li>
+                <li class="b_li_2 font_samll">careers with CCW</li>
+                <li class="b_li_2 font_samll">be a guest chef</li>
+                <li class="b_li_2 font_samll">help</li>
+            </ul>
+        </li>
+        <br class="both" />
+    </ul>
+</div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22802078-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script src="http://s13.cnzz.com/stat.php?id=1275176&web_id=1275176&show=pic" language="JavaScript"></script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="common" extends="struts-default-custom" namespace="/common">
+		<action name="insert-title" class="titleAction" method="getTitleContent">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+		
+		<action name="upload" class="uploadAction">
+			<result name="error">/WEB-INF/jsp/common/error.jsp</result>
+		</action>
+    </package>
+</struts>
