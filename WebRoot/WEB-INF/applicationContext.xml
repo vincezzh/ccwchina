@@ -261,4 +261,13 @@
 	<bean name="MeiTouNaoCenter" class="com.vincezzh.meitounao.MeiTouNaoCenter">
 		<property name="commonDao" ref="commonDao" />
 	</bean>
+	
+	<!-- Mobile Actions -->
+	<bean name="mobileLoginAction" class="com.ccw.action.mobile.LoginAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	
+	<bean name="mobileInformationAction" class="com.ccw.action.mobile.InformationAction" scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
 </beans>

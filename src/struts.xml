@@ -29,4 +29,7 @@
 	<include file="user.xml"/>
 	<include file="common.xml"/>
 	<include file="store.xml"/>
+	
+	<!-- For iOS -->
+	<include file="mobile.xml"/>
 </struts>
