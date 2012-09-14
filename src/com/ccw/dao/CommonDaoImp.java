@@ -257,7 +257,7 @@ public class CommonDaoImp implements CommonDaoInf {
 		Date today = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(today);
-		c.add(Calendar.DATE, 1);
+		c.add(Calendar.DATE, 30);
 		Date tomorrow = c.getTime();
 		Query query = getEntityManager().createQuery("select n from Notifications n where n.contentTime>='" + sdf.format(today) + " 00:00:00' and n.contentTime<='" + sdf.format(tomorrow) + " 23:59:59'");
 		ArrayList<Notifications> list = (ArrayList<Notifications>)query.getResultList();

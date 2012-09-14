@@ -46,7 +46,7 @@ public class NotificationsAction extends ActionSupport {
 	        xmlsb.append("<meimei_notifications>");
 			
 			if(list.size() == 0) {
-				xmlsb.append("<content>" + "今天运气不错，没有任务。" + "</content>");
+				xmlsb.append("<content>" + "运气不错，30天内没有任务。" + "</content>");
 			}else {
 				for(Notifications n : list) {
 					xmlsb.append("<content>" + sdf.format(n.getContentTime()) + " " + n.getContent() + "</content>");
