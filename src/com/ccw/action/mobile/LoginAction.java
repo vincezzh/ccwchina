@@ -15,6 +15,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 
 import com.ccw.bean.Courselocation;
+import com.ccw.bean.Peopletitle;
 import com.ccw.bean.Userdetail;
 import com.ccw.common.Params;
 import com.ccw.dao.UserDaoInf;
@@ -72,9 +73,9 @@ public class LoginAction extends ActionSupport {
 		        username.addText(user.getUserId());
 		        
 		        Element title = myInformation.addElement("title");
-		        Element titleId = title.addElement("titleId");
+		        Element titleId = title.addElement("id");
 		        titleId.addText(user.getPeopletitle().getPeopleTitleId().toString());
-		        Element titleValue = title.addElement("titleValue");
+		        Element titleValue = title.addElement("value");
 		        titleValue.addText(user.getPeopletitle().getPeopleTitleName());
 		        
 		        Element firstname = myInformation.addElement("firstname");
@@ -114,6 +115,8 @@ public class LoginAction extends ActionSupport {
 			user.setNickName(user.getUserId());
 			user.setFirstName("");
 			user.setLastName("");
+			user.setCellphone("");
+			user.setAddress("");
 			user.setNeedNews("true");
 			user.setNeedCoupon("true");
 			user.setPoints(0);
@@ -121,6 +124,9 @@ public class LoginAction extends ActionSupport {
 			courselocation.setCourseLocationId(1);
 			user.setCourselocation(courselocation);
 			user.setPreferredLanguage("en");
+			Peopletitle peopleTitle = new Peopletitle();
+			peopleTitle.setPeopleTitleId(1);
+			user.setPeopletitle(peopleTitle);
 			userDao.register(user);
 			
 			username = user.getUserId();
