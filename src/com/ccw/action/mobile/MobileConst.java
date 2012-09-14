@@ -7,4 +7,5 @@ public class MobileConst {
 	public static final String RETRIEVE_PASSWORD_SUCCESSFUL = "Retrieve password successful. Please check your email: ";
 	public static final String EDIT_INFORMATION_SUCCESSFUL = "Update Information successful.";
 	public static final String EDIT_PASSWORD_SUCCESSFUL = "Edit password successful.";
+	public static final String BOOK_PUBLIC_COURSE_SUCCESSFUL = "Book class successful. Please check your email for detail: ";
 }

@@ -1,28 +1,26 @@
 package com.ccw.action.mobile;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
 import com.ccw.bean.Calendarwithcourse;
-import com.ccw.bean.Classtime;
+import com.ccw.bean.Course;
 import com.ccw.bean.Coursecalendar;
-import com.ccw.bean.Courselocation;
-import com.ccw.bean.Userdetail;
-import com.ccw.common.CalendarGenerator;
+import com.ccw.common.Params;
+import com.ccw.common.PropertyUtil;
 import com.ccw.dao.CourseDaoInf;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class CourseListAction extends ActionSupport {
@@ -30,50 +28,14 @@ public class CourseListAction extends ActionSupport {
 	private Log log = LogFactory.getLog(CourseListAction.class);
 	private Date month;
 	private String monthDate;
-	private Integer courseLocationId;
-	private String courseId;
-	private ArrayList<Courselocation> locationList;
-	private Courselocation location;
 	private CourseDaoInf courseDao;
-	
+
 	public Date getMonth() {
 		return month;
 	}
 
 	public void setMonth(Date month) {
 		this.month = month;
-	}
-
-	public Integer getCourseLocationId() {
-		return courseLocationId;
-	}
-
-	public void setCourseLocationId(Integer courseLocationId) {
-		this.courseLocationId = courseLocationId;
-	}
-
-	public CourseDaoInf getCourseDao() {
-		return courseDao;
-	}
-
-	public void setCourseDao(CourseDaoInf courseDao) {
-		this.courseDao = courseDao;
-	}
-
-	public ArrayList<Courselocation> getLocationList() {
-		return locationList;
-	}
-
-	public void setLocationList(ArrayList<Courselocation> locationList) {
-		this.locationList = locationList;
-	}
-
-	public Courselocation getLocation() {
-		return location;
-	}
-
-	public void setLocation(Courselocation location) {
-		this.location = location;
 	}
 
 	public String getMonthDate() {
@@ -84,20 +46,19 @@ public class CourseListAction extends ActionSupport {
 		this.monthDate = monthDate;
 	}
 
-	public String getCourseId() {
-		return courseId;
+	public CourseDaoInf getCourseDao() {
+		return courseDao;
 	}
 
-	public void setCourseId(String courseId) {
-		this.courseId = courseId;
+	public void setCourseDao(CourseDaoInf courseDao) {
+		this.courseDao = courseDao;
 	}
 
 	public String getAMonthCalendar() {
+		log.debug("MobileCourseListAction.getAMonthCalendar()");
+		Document document = DocumentHelper.createDocument();  
+        Element ccwCalendar = document.addElement("CCWCalendar");
 		try {
-			log.debug("CourseListAction.getAMonthCalendar()");
-			
-			if(courseLocationId == null)
-				courseLocationId = 1;
 			if(monthDate == null) {
 				month = new Date();
 			}else {
@@ -105,84 +66,88 @@ public class CourseListAction extends ActionSupport {
 				month = sdf.parse(monthDate);
 			}
 			
-			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarBycourseLocationByMonth(courseLocationId, month);
-			ArrayList<Classtime> allTimes = courseDao.getAllClasstime();
-			Map session = ActionContext.getContext().getSession();
-			Locale locale = (Locale)session.get("WW_TRANS_I18N_LOCALE");
-			String calendar = CalendarGenerator.generateAMonthCalendar(courses, allTimes, courseLocationId, month, locale);
-			
-			ActionContext ctx = ActionContext.getContext();
-			HttpServletResponse response = (HttpServletResponse)ctx.get(ServletActionContext.HTTP_RESPONSE);
-			response.setCharacterEncoding("utf-8"); 
-			PrintWriter out = response.getWriter();
-			out.print(calendar);
-
-			return null;
-		} catch (Exception e) {
-			log.error(e);
-			log.error(e.getMessage());
-			return ERROR;
-		}
-	}
-	
-	public String gotoCourseCalendar() {
-		try {
-			log.debug("CourseListAction.gotoCourseCalendar()");
-			
-			locationList = courseDao.getAllCourselocation();
-			
-			Map session = ActionContext.getContext().getSession();
-			Userdetail user = (Userdetail)session.get("user_session");
-			if(user != null) {
-				location = user.getCourselocation();
-			}else {
-				location = locationList.get(0);
-			}
-			
-			month = new Date();
-			
-			return SUCCESS;
-		} catch (Exception e) {
-			log.error(e);
-			log.error(e.getMessage());
-			return ERROR;
-		}
-	}
-	
-	public String checkCourseCalendar() {
-		try {
-			log.debug("CourseListAction.checkCourseCalendar()");
-			
-			Date from = new Date();
-			Calendar c = Calendar.getInstance();
-			c.setTime(from);
-			c.add(Calendar.DATE, 30);
-			Date to = c.getTime();
-			ArrayList<Calendarwithcourse> list = courseDao.getAllCalendarwithcourseByCourseAndLocationAndDate(courseId, courseLocationId, from, to);
-			
-			ActionContext ctx = ActionContext.getContext();
-			HttpServletResponse response = (HttpServletResponse)ctx.get(ServletActionContext.HTTP_RESPONSE);
-			response.setCharacterEncoding("utf-8"); 
-			PrintWriter out = response.getWriter();
-			if(list.size() > 0) {
-				Iterator<Calendarwithcourse> i = list.iterator();
-				Calendarwithcourse cwc = null;
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				while(i.hasNext()) {
-					cwc = i.next();
-					out.print("<div>");
-					out.print("<a href='/order/go-to-public-order.htm?courseCalendarId=" + cwc.getCoursecalendar().getCourseCalendarId() + "'>" + sdf.format(cwc.getCoursecalendar().getClassDate()) + " " + cwc.getCoursecalendar().getClasstime().getClassTimeContent() + "</a>");
-					out.print("</div>");
+			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarByMonth(month);
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+			for(Coursecalendar aCourse : courses) {
+				Element courseCalendar = ccwCalendar.addElement("courseCalendar");
+				
+				Element courseCalendarId = courseCalendar.addElement("courseCalendarId");
+				courseCalendarId.addText(aCourse.getCourseCalendarId());
+				
+				Element classDate = courseCalendar.addElement("classDate");
+				classDate.addText(sdf1.format(aCourse.getClassDate()));
+				
+				Element classTime = courseCalendar.addElement("classTime");
+				Element classTimeId = classTime.addElement("id");
+				classTimeId.addText(aCourse.getClasstime().getClassTimeId().toString());
+				Element classTimeName = classTime.addElement("name");
+				classTimeName.addText(aCourse.getClasstime().getClassTimeContent());
+				
+				Element pricePerPerson = courseCalendar.addElement("pricePerPerson");
+				pricePerPerson.addText(aCourse.getPricePerPerson().toString());
+				
+				Element seatLeft = courseCalendar.addElement("seatLeft");
+				seatLeft.addText(aCourse.getSeatLeft().toString());
+				
+				Element courseLocation = courseCalendar.addElement("courseLocation");
+				Element courseLocationId = courseLocation.addElement("id");
+				courseLocationId.addText(aCourse.getCourselocation().getCourseLocationId().toString());
+				Element courseLocationName = courseLocation.addElement("name");
+				courseLocationName.addText(aCourse.getCourselocation().getCourseLocationName());
+				
+				Element courseTrunkType = courseCalendar.addElement("courseTrunkType");
+				Element courseTrunkTypeId = courseTrunkType.addElement("id");
+				courseTrunkTypeId.addText(aCourse.getCoursetrunktype().getCourseTrunkTypeId().toString());
+				Element courseTrunkTypeName = courseTrunkType.addElement("name");
+				courseTrunkTypeName.addText(PropertyUtil.get(Params.USA, aCourse.getCoursetrunktype().getCourseTrunkTypeNameKey()));
+				Element fontColor = courseTrunkType.addElement("fontColor");
+				fontColor.addText(aCourse.getCoursetrunktype().getFontColor());
+				Element backgroundColor = courseTrunkType.addElement("backgroundColor");
+				backgroundColor.addText(aCourse.getCoursetrunktype().getBackgroundColor());
+				Element courseBranchType = courseTrunkType.addElement("courseBranchType");
+				Element courseBranchTypeId = courseBranchType.addElement("id");
+				courseBranchTypeId.addText(aCourse.getCoursebranchtype().getCourseBranchTypeId().toString());
+				Element courseBranchTypeName = courseBranchType.addElement("name");
+				courseBranchTypeName.addText(PropertyUtil.get(Params.USA, aCourse.getCoursebranchtype().getCourseBranchTypeNameKey()));
+				
+				Element coursesElement = courseCalendar.addElement("courses");
+				for(Calendarwithcourse calendarwithcourse : aCourse.getCalendarwithcourses()) {
+					Course course = calendarwithcourse.getCourse();
+					
+					Element courseElement = coursesElement.addElement("course");
+					Element courseIdElement = courseElement.addElement("id");
+					courseIdElement.addText(course.getCourseId());
+					Element courseNameElement = courseElement.addElement("courseNameEn");
+					courseNameElement.addText(course.getCourseNameEn());
+					Element pictureOne = courseElement.addElement("pictureOne");
+					pictureOne.addText(course.getPictureOne());
 				}
-			}else {
-				out.print("");
 			}
-			
-			return null;
 		} catch (Exception e) {
+			Element errorMsg = ccwCalendar.addElement("errorMsg");
+			errorMsg.addText(MobileConst.ERROR_MSG);
+			
 			log.error(e);
 			log.error(e.getMessage());
-			return ERROR;
+		}
+		
+		sendBackXMLToMobile(document);
+        return null;
+	}
+	
+	private void sendBackXMLToMobile(Document document) {
+		try {
+			HttpServletResponse response = ServletActionContext.getResponse();      
+	        response.setCharacterEncoding("UTF-8");
+	        response.setContentType("text/xml;charset=utf-8");   
+	        response.setHeader("Cache-Control", "no-cache");
+			PrintWriter out = response.getWriter();
+			out.write(document.asXML()); 
+	        out.flush();
+	        out.close();
+		} catch (IOException e) {
+			log.error(e);
+			log.error(e.getMessage());
 		}
 	}
 }

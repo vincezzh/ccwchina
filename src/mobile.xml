@@ -21,11 +21,9 @@
 		</action>
 		
 		<action name="calendar" class="mobileCourseListAction" method="getAMonthCalendar">
-			<result name="success">/WEB-INF/jsp/order/orderSuccessful.jsp</result>
 		</action>
 		
 		<action name="book-public-order" class="mobilePublicOrderAction" method="bookPublicOrder">
-        	<result name="success">/WEB-INF/jsp/order/orderSuccessful.jsp</result>
 		</action>
     </package>
 </struts>

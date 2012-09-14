@@ -21,6 +21,8 @@ import com.ccw.bean.Userdetail;
 public interface CourseDaoInf {
 	public ArrayList<Coursecalendar> getCoursecalendarBycourseLocationByMonth(Integer courseLocationId, Date month) throws Exception;
 	
+	public ArrayList<Coursecalendar> getCoursecalendarByMonth(Date month) throws Exception;
+	
 	public ArrayList<Coursecalendar> getCoursecalendarBycourseLocationByStartDateAndEndDate(Integer courseLocationId, Date startDate, Date endDate) throws Exception;
 	
 	public ArrayList<Classtime> getAllClasstime() throws Exception;

@@ -270,4 +270,8 @@
 	<bean name="mobileInformationAction" class="com.ccw.action.mobile.InformationAction" scope="prototype">
 		<property name="userDao" ref="userDao" />
 	</bean>
+	
+	<bean name="mobileCourseListAction" class="com.ccw.action.mobile.CourseListAction" scope="prototype">
+		<property name="courseDao" ref="courseDao" />
+	</bean>
 </beans>
