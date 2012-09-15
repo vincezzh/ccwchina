@@ -60,17 +60,11 @@ public class CourseDaoImp implements CourseDaoInf {
 		return list;
 	}
 	
-	public ArrayList<Coursecalendar> getCoursecalendarByMonth(Date month) throws Exception {
+	public ArrayList<Coursecalendar> getCoursecalendarByMonth(Date fromMonth, Date toMonth) throws Exception {
 		log.debug("CourseDaoImp.getCoursecalendarByMonth()");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Calendar c = Calendar.getInstance();
-		c.setTime(month);
-		c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
-		Date from = c.getTime();
-		c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
-		Date to = c.getTime();
-		Query query = getEntityManager().createQuery("select c from Coursecalendar c where c.avaliable='yes' and c.seatLeft>0 and c.classDate>='" + sdf.format(from) + "' and c.classDate<='" + sdf.format(to) + "' order by c.classDate,c.classtime.order asc");
+		Query query = getEntityManager().createQuery("select c from Coursecalendar c where c.avaliable='yes' and c.seatLeft>0 and c.classDate>='" + sdf.format(fromMonth) + "' and c.classDate<='" + sdf.format(toMonth) + "' order by c.classDate,c.classtime.order asc");
 		ArrayList<Coursecalendar> list = (ArrayList<Coursecalendar>)query.getResultList();
 		return list;
 	}

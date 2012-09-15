@@ -26,25 +26,11 @@ import com.opensymphony.xwork2.ActionSupport;
 public class CourseListAction extends ActionSupport {
 	private static final long serialVersionUID = -4961552815699434206L;
 	private Log log = LogFactory.getLog(CourseListAction.class);
-	private Date month;
-	private String monthDate;
+	private Date fromMonth;
+	private Date toMonth;
+	private String fromMonthDate;
+	private String toMonthDate;
 	private CourseDaoInf courseDao;
-
-	public Date getMonth() {
-		return month;
-	}
-
-	public void setMonth(Date month) {
-		this.month = month;
-	}
-
-	public String getMonthDate() {
-		return monthDate;
-	}
-
-	public void setMonthDate(String monthDate) {
-		this.monthDate = monthDate;
-	}
 
 	public CourseDaoInf getCourseDao() {
 		return courseDao;
@@ -54,19 +40,48 @@ public class CourseListAction extends ActionSupport {
 		this.courseDao = courseDao;
 	}
 
+	public String getFromMonthDate() {
+		return fromMonthDate;
+	}
+
+	public void setFromMonthDate(String fromMonthDate) {
+		this.fromMonthDate = fromMonthDate;
+	}
+
+	public String getToMonthDate() {
+		return toMonthDate;
+	}
+
+	public void setToMonthDate(String toMonthDate) {
+		this.toMonthDate = toMonthDate;
+	}
+
+	public Date getFromMonth() {
+		return fromMonth;
+	}
+
+	public void setFromMonth(Date fromMonth) {
+		this.fromMonth = fromMonth;
+	}
+
+	public Date getToMonth() {
+		return toMonth;
+	}
+
+	public void setToMonth(Date toMonth) {
+		this.toMonth = toMonth;
+	}
+
 	public String getAMonthCalendar() {
 		log.debug("MobileCourseListAction.getAMonthCalendar()");
 		Document document = DocumentHelper.createDocument();  
         Element ccwCalendar = document.addElement("CCWCalendar");
 		try {
-			if(monthDate == null) {
-				month = new Date();
-			}else {
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-				month = sdf.parse(monthDate);
-			}
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			fromMonth = sdf.parse(fromMonthDate);
+			toMonth = sdf.parse(toMonthDate);
 			
-			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarByMonth(month);
+			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarByMonth(fromMonth, toMonth);
 			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 			for(Coursecalendar aCourse : courses) {
 				Element courseCalendar = ccwCalendar.addElement("courseCalendar");
