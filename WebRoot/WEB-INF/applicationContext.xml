@@ -274,4 +274,10 @@
 	<bean name="mobileCourseListAction" class="com.ccw.action.mobile.CourseListAction" scope="prototype">
 		<property name="courseDao" ref="courseDao" />
 	</bean>
+	
+	<bean name="mobilePublicOrderAction" class="com.ccw.action.mobile.PublicOrderAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="courseDao" ref="courseDao" />
+	</bean>
 </beans>
