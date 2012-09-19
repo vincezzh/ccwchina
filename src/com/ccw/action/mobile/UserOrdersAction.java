@@ -58,45 +58,50 @@ public class UserOrdersAction extends ActionSupport {
 		try {
 			publicOrderList = orderDao.getAllOrderpublicByUser(username);
 			
-			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-			for(Orderpublic anOrder : publicOrderList) {
-				Element order = publicOrders.addElement("order");
-				
-				Element orderPublicId = order.addElement("orderPublicId");
-				orderPublicId.addText(anOrder.getOrderPublicId());
-				
-				Element classDate = publicOrders.addElement("classDate");
-				classDate.addText(sdf1.format(anOrder.getCoursecalendar().getClassDate()));
-				
-				Element classTime = publicOrders.addElement("classTime");
-				Element classTimeId = classTime.addElement("id");
-				classTimeId.addText(anOrder.getCoursecalendar().getClasstime().getClassTimeId().toString());
-				Element classTimeName = classTime.addElement("name");
-				classTimeName.addText(anOrder.getCoursecalendar().getClasstime().getClassTimeContent());
-				
-				Element totalPeopleNumber = publicOrders.addElement("totalPeopleNumber");
-				totalPeopleNumber.addText(anOrder.getTotalPeopleNumber().toString());
-				
-				Element courseLocation = publicOrders.addElement("courseLocation");
-				Element courseLocationId = courseLocation.addElement("id");
-				courseLocationId.addText(anOrder.getCoursecalendar().getCourselocation().getCourseLocationId().toString());
-				Element courseLocationName = courseLocation.addElement("name");
-				courseLocationName.addText(anOrder.getCoursecalendar().getCourselocation().getCourseLocationName());
-				
-				Element courseTrunkType = publicOrders.addElement("courseTrunkType");
-				Element courseTrunkTypeId = courseTrunkType.addElement("id");
-				courseTrunkTypeId.addText(anOrder.getCoursecalendar().getCoursetrunktype().getCourseTrunkTypeId().toString());
-				Element courseTrunkTypeName = courseTrunkType.addElement("name");
-				courseTrunkTypeName.addText(PropertyUtil.get(Params.USA, anOrder.getCoursecalendar().getCoursetrunktype().getCourseTrunkTypeNameKey()));
-				Element fontColor = courseTrunkType.addElement("fontColor");
-				fontColor.addText(anOrder.getCoursecalendar().getCoursetrunktype().getFontColor());
-				Element backgroundColor = courseTrunkType.addElement("backgroundColor");
-				backgroundColor.addText(anOrder.getCoursecalendar().getCoursetrunktype().getBackgroundColor());
-				Element courseBranchType = courseTrunkType.addElement("courseBranchType");
-				Element courseBranchTypeId = courseBranchType.addElement("id");
-				courseBranchTypeId.addText(anOrder.getCoursecalendar().getCoursebranchtype().getCourseBranchTypeId().toString());
-				Element courseBranchTypeName = courseBranchType.addElement("name");
-				courseBranchTypeName.addText(PropertyUtil.get(Params.USA, anOrder.getCoursecalendar().getCoursebranchtype().getCourseBranchTypeNameKey()));
+			if(publicOrderList.size() > 0) {
+				SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+				for(Orderpublic anOrder : publicOrderList) {
+					Element order = publicOrders.addElement("order");
+					
+					Element orderPublicId = order.addElement("orderPublicId");
+					orderPublicId.addText(anOrder.getOrderPublicId());
+					
+					Element classDate = order.addElement("classDate");
+					classDate.addText(sdf1.format(anOrder.getCoursecalendar().getClassDate()));
+					
+					Element classTime = order.addElement("classTime");
+					Element classTimeId = classTime.addElement("id");
+					classTimeId.addText(anOrder.getCoursecalendar().getClasstime().getClassTimeId().toString());
+					Element classTimeName = classTime.addElement("name");
+					classTimeName.addText(anOrder.getCoursecalendar().getClasstime().getClassTimeContent());
+					
+					Element totalPeopleNumber = order.addElement("totalPeopleNumber");
+					totalPeopleNumber.addText(anOrder.getTotalPeopleNumber().toString());
+					
+					Element courseLocation = order.addElement("courseLocation");
+					Element courseLocationId = courseLocation.addElement("id");
+					courseLocationId.addText(anOrder.getCoursecalendar().getCourselocation().getCourseLocationId().toString());
+					Element courseLocationName = courseLocation.addElement("name");
+					courseLocationName.addText(anOrder.getCoursecalendar().getCourselocation().getCourseLocationName());
+					
+					Element courseTrunkType = order.addElement("courseTrunkType");
+					Element courseTrunkTypeId = courseTrunkType.addElement("id");
+					courseTrunkTypeId.addText(anOrder.getCoursecalendar().getCoursetrunktype().getCourseTrunkTypeId().toString());
+					Element courseTrunkTypeName = courseTrunkType.addElement("name");
+					courseTrunkTypeName.addText(PropertyUtil.get(Params.USA, anOrder.getCoursecalendar().getCoursetrunktype().getCourseTrunkTypeNameKey()));
+					Element fontColor = courseTrunkType.addElement("fontColor");
+					fontColor.addText(anOrder.getCoursecalendar().getCoursetrunktype().getFontColor());
+					Element backgroundColor = courseTrunkType.addElement("backgroundColor");
+					backgroundColor.addText(anOrder.getCoursecalendar().getCoursetrunktype().getBackgroundColor());
+					Element courseBranchType = courseTrunkType.addElement("courseBranchType");
+					Element courseBranchTypeId = courseBranchType.addElement("id");
+					courseBranchTypeId.addText(anOrder.getCoursecalendar().getCoursebranchtype().getCourseBranchTypeId().toString());
+					Element courseBranchTypeName = courseBranchType.addElement("name");
+					courseBranchTypeName.addText(PropertyUtil.get(Params.USA, anOrder.getCoursecalendar().getCoursebranchtype().getCourseBranchTypeNameKey()));
+				}
+			}else {
+				Element message = publicOrders.addElement("message");
+				message.addText(MobileConst.NO_PUBLIC_ORDERS);
 			}
 		}catch(Exception e) {
 			Element errorMsg = publicOrders.addElement("errorMsg");
