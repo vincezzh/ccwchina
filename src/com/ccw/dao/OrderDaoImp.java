@@ -69,6 +69,21 @@ public class OrderDaoImp implements OrderDaoInf {
 		ArrayList<Orderpublic> list = (ArrayList<Orderpublic>)query.getResultList();
 		return list;
 	}
+	
+	public ArrayList<Orderpublic> getAllOrderpublicByUser(String userId) throws Exception {
+		log.debug("OrderDaoImp.getAllOrderpublicByUser()");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date today = new Date();
+		StringBuffer queryPlus = new StringBuffer();
+		if(userId != null) {
+			queryPlus.append(" and o.orderbasic.userdetail.userId='" + userId + "'");
+		}
+		
+		Query query = getEntityManager().createQuery("select o from Orderpublic o where o.avaliable='yes' and o.coursecalendar.classDate>='" + sdf.format(today) + "'" + queryPlus.toString() + " order by o.coursecalendar.classDate desc");
+		ArrayList<Orderpublic> list = (ArrayList<Orderpublic>)query.getResultList();
+		return list;
+	}
 
 	public Long getAllOrderpublicCountByUserByStatus(String userId, Integer orderStatusId) throws Exception {
 		log.debug("OrderDaoImp.getAllOrderpublicCountByUserByStatus()");

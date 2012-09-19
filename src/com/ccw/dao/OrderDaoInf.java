@@ -15,6 +15,8 @@ public interface OrderDaoInf {
 	
 	public ArrayList<Orderpublic> getAllOrderpublicByUserByStatusByPageNumber(String userId, Integer pageNumber, Integer recordNumber, Integer orderStatusId) throws Exception;
 	
+	public ArrayList<Orderpublic> getAllOrderpublicByUser(String userId) throws Exception;
+	
 	public Long getAllOrderpublicCountByUserByStatus(String userId, Integer orderStatusId) throws Exception;
 	
 	public ArrayList<Orderprivate> getAllOrderprivateByUserByStatusByPageNumber(String userId, Integer pageNumber, Integer recordNumber, Integer orderStatusId) throws Exception;

@@ -25,5 +25,8 @@
 		
 		<action name="book-public-order" class="mobilePublicOrderAction" method="bookPublicOrder">
 		</action>
+		
+		<action name="list-public-order" class="mobileUserOrdersAction" method="getPublicOrder">
+		</action>
     </package>
 </struts>

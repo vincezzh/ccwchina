@@ -280,4 +280,8 @@
 		<property name="userDao" ref="userDao" />
 		<property name="courseDao" ref="courseDao" />
 	</bean>
+	
+	<bean name="mobileUserOrdersAction" class="com.ccw.action.mobile.UserOrdersAction" scope="prototype">
+		<property name="orderDao" ref="orderDao" />
+	</bean>
 </beans>
