@@ -64,7 +64,7 @@ public class CourseDaoImp implements CourseDaoInf {
 		log.debug("CourseDaoImp.getCoursecalendarByMonth()");
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Query query = getEntityManager().createQuery("select c from Coursecalendar c where c.avaliable='yes' and c.seatLeft>0 and c.classDate>='" + sdf.format(fromMonth) + "' and c.classDate<='" + sdf.format(toMonth) + "' order by c.classDate,c.classtime.order asc");
+		Query query = getEntityManager().createQuery("select c from Coursecalendar c where c.coursetrunktype.courseTrunkTypeId!=" + Params.PRIVATE_TRUNKTYPE_ID + " and c.avaliable='yes' and c.seatLeft>0 and c.classDate>='" + sdf.format(fromMonth) + "' and c.classDate<='" + sdf.format(toMonth) + "' order by c.classDate,c.classtime.order asc");
 		ArrayList<Coursecalendar> list = (ArrayList<Coursecalendar>)query.getResultList();
 		return list;
 	}
