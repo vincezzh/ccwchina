@@ -36,7 +36,10 @@
       <property name="driver"><value>com.mysql.jdbc.Driver</value></property> 
       <property name="driverUrl"><value>jdbc:mysql://localhost:3306/ccwchina?characterEncoding=utf8</value></property> 
       <property name="user" value="root"></property> 
-      <property name="password" value="admin"></property> 
+      <property name="password" value="admin"></property>
+      <!-- <property name="driverUrl"><value>jdbc:mysql://localhost:3307/ccwchina?characterEncoding=utf8</value></property> 
+      <property name="user" value="ccwchina"></property> 
+      <property name="password" value="xzSAwq21"></property> -->
 
       <property name="prototypeCount" value="30"></property> 
       <property name="maximumConnectionCount" value="90"></property> 
