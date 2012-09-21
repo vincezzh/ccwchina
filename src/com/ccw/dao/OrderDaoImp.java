@@ -80,7 +80,7 @@ public class OrderDaoImp implements OrderDaoInf {
 			queryPlus.append(" and o.orderbasic.userdetail.userId='" + userId + "'");
 		}
 		
-		Query query = getEntityManager().createQuery("select o from Orderpublic o where o.avaliable='yes' and o.coursecalendar.classDate>='" + sdf.format(today) + "'" + queryPlus.toString() + " order by o.coursecalendar.classDate desc");
+		Query query = getEntityManager().createQuery("select o from Orderpublic o where o.avaliable='yes' and o.coursecalendar.classDate>='" + sdf.format(today) + "'" + queryPlus.toString() + " order by o.coursecalendar.classDate asc");
 		ArrayList<Orderpublic> list = (ArrayList<Orderpublic>)query.getResultList();
 		return list;
 	}
