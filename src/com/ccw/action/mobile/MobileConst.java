@@ -9,4 +9,5 @@ public class MobileConst {
 	public static final String EDIT_PASSWORD_SUCCESSFUL = "Edit password successful.";
 	public static final String BOOK_PUBLIC_COURSE_SUCCESSFUL = "Book class successful. Please check your email for detail: ";
 	public static final String NO_PUBLIC_ORDERS = "You don't have any orders right now.";
+	public static final String USER_EXISTED = "The username is already existed. Please change another one.";
 }

@@ -45,8 +45,8 @@ public class InformationAction extends ActionSupport {
 		try {
 			Userdetail tempUser = userDao.getDetailUser(user.getUserId());
 			tempUser.setPeopletitle(user.getPeopletitle());
-			tempUser.setFirstName(user.getFirstName());
-			tempUser.setLastName(user.getLastName());
+			tempUser.setFirstName(new String(user.getFirstName().getBytes("ISO-8859-1"), "UTF-8"));
+			tempUser.setLastName(new String(user.getLastName().getBytes("ISO-8859-1"), "UTF-8"));
 			tempUser.setEmail(user.getEmail());
 			tempUser.setCellphone(user.getCellphone());
 			userDao.updateUserInformation(tempUser);

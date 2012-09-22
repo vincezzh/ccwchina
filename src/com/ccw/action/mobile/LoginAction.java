@@ -106,33 +106,43 @@ public class LoginAction extends ActionSupport {
 	}
 	
 	public String register() {
+		log.debug("MobileLoginAction.register()");
+		Document document = DocumentHelper.createDocument();  
+        Element myInformation = document.addElement("myInformation");
 		try {
-			log.debug("MobileLoginAction.register()");
-			
-			user.setAvaliable("yes");
-			user.setIsVegetarian("false");
-			user.setRegisterTime(new Date());
-			user.setNickName(user.getUserId());
-			user.setFirstName("");
-			user.setLastName("");
-			user.setCellphone("");
-			user.setAddress("");
-			user.setNeedNews("true");
-			user.setNeedCoupon("true");
-			user.setPoints(0);
-			Courselocation courselocation = new Courselocation();
-			courselocation.setCourseLocationId(1);
-			user.setCourselocation(courselocation);
-			user.setPreferredLanguage("en");
-			Peopletitle peopleTitle = new Peopletitle();
-			peopleTitle.setPeopleTitleId(1);
-			user.setPeopletitle(peopleTitle);
-			userDao.register(user);
-			
-			username = user.getUserId();
-			password = user.getPassword();
-			
-			return SUCCESS;
+			user = userDao.getDetailUser(user.getUserId());
+			if(user == null) {
+				user.setAvaliable("yes");
+				user.setIsVegetarian("false");
+				user.setRegisterTime(new Date());
+				user.setNickName(user.getUserId());
+				user.setFirstName("");
+				user.setLastName("");
+				user.setCellphone("");
+				user.setAddress("");
+				user.setNeedNews("true");
+				user.setNeedCoupon("true");
+				user.setPoints(0);
+				Courselocation courselocation = new Courselocation();
+				courselocation.setCourseLocationId(1);
+				user.setCourselocation(courselocation);
+				user.setPreferredLanguage("en");
+				Peopletitle peopleTitle = new Peopletitle();
+				peopleTitle.setPeopleTitleId(1);
+				user.setPeopletitle(peopleTitle);
+				userDao.register(user);
+				
+				username = user.getUserId();
+				password = user.getPassword();
+				
+				return SUCCESS;
+			}else {
+				Element errorMsg = myInformation.addElement("errorMsg");
+				errorMsg.addText(MobileConst.USER_EXISTED);
+				
+				sendBackXMLToMobile(document);
+				return null;
+			}
 		}catch(Exception e) {
 			log.error(e);
 			log.error(e.getMessage());

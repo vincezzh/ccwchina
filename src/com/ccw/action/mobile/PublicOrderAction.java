@@ -128,6 +128,7 @@ public class PublicOrderAction extends ActionSupport {
 			order.getOrderbasic().setAvaliable("yes");
 			order.getOrderbasic().setBookingTime(now);
 			order.getOrderbasic().setUserdetail(user);
+			order.getOrderbasic().setContactPerson(new String(order.getOrderbasic().getContactPerson().getBytes("ISO-8859-1"), "UTF-8"));
 			Coursecalendar cc = new Coursecalendar();
 			cc.setCourseCalendarId(courseCalendarId);
 			order.setCoursecalendar(cc);
