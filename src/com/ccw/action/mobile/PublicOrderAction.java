@@ -148,7 +148,7 @@ public class PublicOrderAction extends ActionSupport {
 			Element message = bookPublicOrder.addElement("message");
 			message.addText(MobileConst.BOOK_PUBLIC_COURSE_SUCCESSFUL + user.getEmail());
 			
-//			sendMails();
+			sendMails();
 		} catch (Exception e) {
 			Element errorMsg = bookPublicOrder.addElement("errorMsg");
 			errorMsg.addText(MobileConst.ERROR_MSG);
