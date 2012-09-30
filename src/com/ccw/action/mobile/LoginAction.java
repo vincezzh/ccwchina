@@ -113,8 +113,7 @@ public class LoginAction extends ActionSupport {
         Element myInformation = document.addElement("myInformation");
 		try {
 			user.setUserId(new String(user.getUserId().getBytes("ISO-8859-1"), "UTF-8"));
-			user = userDao.getDetailUser(user.getUserId());
-			if(user == null) {
+			if(userDao.getDetailUser(user.getUserId()) == null) {
 				user.setPassword(new String(user.getPassword().getBytes("ISO-8859-1"), "UTF-8"));
 				user.setEmail(new String(user.getEmail().getBytes("ISO-8859-1"), "UTF-8"));
 				user.setAvaliable("yes");
