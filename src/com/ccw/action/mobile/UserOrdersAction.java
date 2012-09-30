@@ -56,6 +56,7 @@ public class UserOrdersAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element publicOrders = document.addElement("publicOrders");
 		try {
+			username = new String(username.getBytes("ISO-8859-1"), "UTF-8");
 			publicOrderList = orderDao.getAllOrderpublicByUser(username);
 			
 			if(publicOrderList.size() > 0) {

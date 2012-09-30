@@ -47,8 +47,8 @@ public class InformationAction extends ActionSupport {
 			tempUser.setPeopletitle(user.getPeopletitle());
 			tempUser.setFirstName(new String(user.getFirstName().getBytes("ISO-8859-1"), "UTF-8"));
 			tempUser.setLastName(new String(user.getLastName().getBytes("ISO-8859-1"), "UTF-8"));
-			tempUser.setEmail(user.getEmail());
-			tempUser.setCellphone(user.getCellphone());
+			tempUser.setEmail(new String(user.getEmail().getBytes("ISO-8859-1"), "UTF-8"));
+			tempUser.setCellphone(new String(user.getCellphone().getBytes("ISO-8859-1"), "UTF-8"));
 			userDao.updateUserInformation(tempUser);
 			
 			Element message = editInformation.addElement("message");
@@ -70,6 +70,8 @@ public class InformationAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element editPassword = document.addElement("editPassword");
 		try {
+			user.setUserId(new String(user.getUserId().getBytes("ISO-8859-1"), "UTF-8"));
+			user.setPassword(new String(user.getPassword().getBytes("ISO-8859-1"), "UTF-8"));
 			Userdetail tempUser = userDao.getDetailUser(user.getUserId());
 			tempUser.setPassword(user.getPassword());
 			userDao.updateUserInformation(tempUser);

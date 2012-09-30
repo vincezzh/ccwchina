@@ -118,6 +118,8 @@ public class PublicOrderAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element bookPublicOrder = document.addElement("bookPublicOrder");
 		try {
+			username = new String(username.getBytes("ISO-8859-1"), "UTF-8");
+			courseCalendarId = new String(courseCalendarId.getBytes("ISO-8859-1"), "UTF-8");
 			user = userDao.getDetailUser(username);
 			
 			Date now = new Date();
@@ -129,6 +131,9 @@ public class PublicOrderAction extends ActionSupport {
 			order.getOrderbasic().setBookingTime(now);
 			order.getOrderbasic().setUserdetail(user);
 			order.getOrderbasic().setContactPerson(new String(order.getOrderbasic().getContactPerson().getBytes("ISO-8859-1"), "UTF-8"));
+			order.getOrderbasic().setEmail(new String(order.getOrderbasic().getEmail().getBytes("ISO-8859-1"), "UTF-8"));
+			order.getOrderbasic().setCellphone(new String(order.getOrderbasic().getCellphone().getBytes("ISO-8859-1"), "UTF-8"));
+			order.setFlag(new String(order.getFlag().getBytes("ISO-8859-1"), "UTF-8"));
 			Coursecalendar cc = new Coursecalendar();
 			cc.setCourseCalendarId(courseCalendarId);
 			order.setCoursecalendar(cc);
@@ -143,7 +148,7 @@ public class PublicOrderAction extends ActionSupport {
 			Element message = bookPublicOrder.addElement("message");
 			message.addText(MobileConst.BOOK_PUBLIC_COURSE_SUCCESSFUL + user.getEmail());
 			
-			sendMails();
+//			sendMails();
 		} catch (Exception e) {
 			Element errorMsg = bookPublicOrder.addElement("errorMsg");
 			errorMsg.addText(MobileConst.ERROR_MSG);

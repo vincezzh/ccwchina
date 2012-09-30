@@ -67,6 +67,8 @@ public class LoginAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element myInformation = document.addElement("myInformation");
 		try {
+			username = new String(username.getBytes("ISO-8859-1"), "UTF-8");
+			password = new String(password.getBytes("ISO-8859-1"), "UTF-8");
 			user = userDao.login(username, password);
 			if(user != null) {
 		        Element username = myInformation.addElement("username");
@@ -110,8 +112,11 @@ public class LoginAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element myInformation = document.addElement("myInformation");
 		try {
+			user.setUserId(new String(user.getUserId().getBytes("ISO-8859-1"), "UTF-8"));
 			user = userDao.getDetailUser(user.getUserId());
 			if(user == null) {
+				user.setPassword(new String(user.getPassword().getBytes("ISO-8859-1"), "UTF-8"));
+				user.setEmail(new String(user.getEmail().getBytes("ISO-8859-1"), "UTF-8"));
 				user.setAvaliable("yes");
 				user.setIsVegetarian("false");
 				user.setRegisterTime(new Date());
@@ -155,6 +160,7 @@ public class LoginAction extends ActionSupport {
 		Document document = DocumentHelper.createDocument();  
         Element retrivePassword = document.addElement("retrivePassword");
 		try {
+			username = new String(username.getBytes("ISO-8859-1"), "UTF-8");
 			user = userDao.getDetailUser(username);
 			if(user == null) {
 				Element message = retrivePassword.addElement("message");
