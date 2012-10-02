@@ -53,5 +53,9 @@
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/bcprov-jdk15on-147.jar"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/JavaPNS_2.2.jar" sourcepath="/Users/vince/Desktop/JavaPNS_2.2_complete/src"/>
 	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/apns-0.1.5-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-3.8.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-3.8.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.3.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-schemas-3.8.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
