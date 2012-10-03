@@ -66,6 +66,11 @@ function gotoRefreshCalendar(courseLocationId) {
 	refreshCalendar(courseLocationId, '<s:date name="month" format="yyyyMMdd"/>');
 }
 
+function exportCalendar() {
+	var courseLocationId = $("#courseLocationSelector").val();
+	window.location.href = "/course/export-calendar.htm?" + "courseLocationId=" + courseLocationId + "&monthDate=" + '<s:date name="month" format="yyyyMMdd"/>';
+}
+
 function refreshCalendar(courseLocationId, month) {
 	$("#calendar").html('<div style="height:605px;"><img src="/images/common/loading.gif" alt="loading"/></div>');
 	jQuery.ajax({
@@ -104,10 +109,10 @@ function startAllSlider() {
     <div class="navcontainer_2">
 
 		<div id="location">
-			<s:select list="locationList" listKey="courseLocationId" listValue="courseLocationName" value="location.courseLocationId" onchange="gotoRefreshCalendar(this.value)"></s:select>
+			<s:select list="locationList" listKey="courseLocationId" listValue="courseLocationName" id="courseLocationSelector" value="location.courseLocationId" onchange="gotoRefreshCalendar(this.value)"></s:select>
 		</div>
 		<div id="calendar"></div>
-
+		<div onclick="exportCalendar()">CCW Calendar</div>
    	</div>
       	
     <br class="both" />

@@ -1,5 +1,9 @@
 package com.ccw.action.course;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import com.ccw.bean.Calendarwithcourse;
@@ -22,6 +27,7 @@ import com.ccw.bean.Courselocation;
 import com.ccw.bean.Userdetail;
 import com.ccw.common.CalendarGenerator;
 import com.ccw.dao.CourseDaoInf;
+import com.ccw.excel.ExcelCalendar;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -34,6 +40,11 @@ public class CourseListAction extends ActionSupport {
 	private String courseId;
 	private ArrayList<Courselocation> locationList;
 	private Courselocation location;
+	
+	private InputStream fileInputStream;
+	private String contentType;
+	private String fileName;
+	
 	private CourseDaoInf courseDao;
 	
 	public Date getMonth() {
@@ -92,6 +103,30 @@ public class CourseListAction extends ActionSupport {
 		this.courseId = courseId;
 	}
 
+	public InputStream getFileInputStream() {
+		return fileInputStream;
+	}
+
+	public void setFileInputStream(InputStream fileInputStream) {
+		this.fileInputStream = fileInputStream;
+	}
+
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	public String getAMonthCalendar() {
 		try {
 			log.debug("CourseListAction.getAMonthCalendar()");
@@ -122,6 +157,51 @@ public class CourseListAction extends ActionSupport {
 			log.error(e);
 			log.error(e.getMessage());
 			return ERROR;
+		}
+	}
+	
+	public String exportAMonthCalendar() {
+        FileOutputStream out = null;
+		try {
+			log.debug("CourseListAction.exportAMonthCalendar()");
+			
+			if(courseLocationId == null)
+				courseLocationId = 1;
+			if(monthDate == null) {
+				month = new Date();
+			}else {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				month = sdf.parse(monthDate);
+			}
+			
+			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarBycourseLocationByMonth(courseLocationId, month);
+			ArrayList<Classtime> allTimes = courseDao.getAllClasstime();
+			Map session = ActionContext.getContext().getSession();
+			Locale locale = (Locale)session.get("WW_TRANS_I18N_LOCALE");
+			
+			ExcelCalendar excelCalendar = new ExcelCalendar(courses, allTimes, month, locale);
+			HSSFWorkbook wb = excelCalendar.generateMonthScheduleExcel();
+			String file = ServletActionContext.getServletContext().getRealPath("temp") + File.separator + new Date().getTime() + ".xls";
+	        out = new FileOutputStream(file);
+	        wb.write(out);
+			setFileInputStream(new FileInputStream(file));
+			setContentType("application/vnd.ms-excel");
+			setFileName("CCW-Calendar.xls");
+			
+			return SUCCESS;
+		} catch (Exception e) {
+			log.error(e);
+			log.error(e.getMessage());
+			return ERROR;
+		} finally {
+			try {
+				if(out != null) {
+					out.flush(); out.close();
+				}
+			}catch (Exception e) {
+				log.error(e);
+				log.error(e.getMessage());
+			}
 		}
 	}
 	
