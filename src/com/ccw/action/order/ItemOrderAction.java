@@ -232,7 +232,7 @@ public class ItemOrderAction extends ActionSupport {
 		content.put("#cellphone#", order.getCellphone());
 		content.put("#email#", order.getEmail());
 		emailAndContactPerson = new String[]{adminEmail + "_with_CCW Auto Robot"};
-		spom = new SendMail(Params.ADMIN_BOOKING_ITEM_MAIL_SUBJECT, templatePath, content, emailAndContactPerson);
+		spom = new SendMail(Params.ADMIN_BOOKING_ITEM_MAIL_SUBJECT, templatePath, content, emailAndContactPerson, true);
 		spom.start();
 	}
 

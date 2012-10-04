@@ -17,7 +17,13 @@ public class SendMail extends Thread {
 	private String mailTemplate;
 	private String subject;
 	private EmailAttachment[] attachments;
+	private boolean addBCC;
 
+	public SendMail(String subject, String templatePath, HashMap<String, String> content, String[] emailAndContactPerson, boolean addBCC) throws Exception {
+		this(subject, templatePath, content, emailAndContactPerson);
+		this.addBCC = addBCC;
+	}
+	
 	public SendMail(String subject, String templatePath, HashMap<String, String> content, String[] emailAndContactPerson) throws Exception {
 		this.subject = subject;
 		attachments = null;
@@ -49,7 +55,7 @@ public class SendMail extends Thread {
 			HashMap<String, String> subjectAndContent = new HashMap<String, String>();
 			subjectAndContent.put("subject", subject);
 			subjectAndContent.put("content", mailTemplate);
-			MailUtil.send(subjectAndContent, emailAndContactPerson,	attachments);
+			MailUtil.send(subjectAndContent, emailAndContactPerson,	attachments, addBCC);
 			System.out.println("SendMail.run() END");
 			log.debug("SendMail.run() END");
 		} catch (Exception e) {

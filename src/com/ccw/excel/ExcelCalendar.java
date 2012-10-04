@@ -27,6 +27,7 @@ import com.ccw.bean.Calendarwithcourse;
 import com.ccw.bean.Classtime;
 import com.ccw.bean.Course;
 import com.ccw.bean.Coursecalendar;
+import com.ccw.bean.Courselocation;
 import com.ccw.common.Params;
 import com.ccw.common.PropertyUtil;
 
@@ -44,7 +45,7 @@ public class ExcelCalendar {
 	private int currentMonth;
 	private Map<String, List<Coursecalendar>> ccMap;
 	private List<Classtime> allTimes;
-	private Integer courseLocationId;
+	private Courselocation courseLocation;
 	private String privateCourseName;
 	
 	private HSSFWorkbook wb;
@@ -53,12 +54,12 @@ public class ExcelCalendar {
 	private short colorIndex = 63;
 	private Map<String, HSSFCellStyle> styles;
 	
-	public ExcelCalendar(List<Coursecalendar> courseCalendars, List<Classtime> allTimes, Integer courseLocationId, Date currentMonth, Locale locale) {
+	public ExcelCalendar(List<Coursecalendar> courseCalendars, List<Classtime> allTimes, Courselocation courseLocation, Date currentMonth, Locale locale) {
 		wb = new HSSFWorkbook();
 		ccMap = new HashMap<String, List<Coursecalendar>>();
 		colorMap = new HashMap<String, Short>();
 		this.allTimes = allTimes;
-		this.courseLocationId = courseLocationId;
+		this.courseLocation = courseLocation;
 		this.locale = locale;
 		this.initilize();
 		this.createWeeks(currentMonth);
@@ -293,7 +294,7 @@ public class ExcelCalendar {
             Row headerRow = sheet.createRow(0);
             headerRow.setHeightInPoints(80);
             Cell titleCell = headerRow.createCell(0);
-            titleCell.setCellValue(currentYear + " [" + week + "]" + CONTENT_WRAP + warmTip);
+            titleCell.setCellValue(currentYear + " [" + week + "] " + courseLocation.getCourseLocationName() + CONTENT_WRAP + warmTip);
             titleCell.setCellStyle(styles.get("title"));
             sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$G$1"));
 
@@ -397,7 +398,7 @@ public class ExcelCalendar {
 							sb.append("[" + classTime.getClassTimeContent() + "]");
 							sb.append(CONTENT_WRAP);
 							sb.append(privateCourseName);
-							String url = prefixPrivate + sdf1.format(calendar.getTime()) + "&classTimeId=" + classTime.getClassTimeId() + "&courseLocationId=" + courseLocationId;
+							String url = prefixPrivate + sdf1.format(calendar.getTime()) + "&classTimeId=" + classTime.getClassTimeId() + "&courseLocationId=" + courseLocation.getCourseLocationId();
 							dayCell.setCellFormula("HYPERLINK(\"" + url + "\",\"" + sb.toString() + "\")");
 							dayCell.setCellStyle(styles.get("privateAvailable"));
     					}

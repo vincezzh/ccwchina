@@ -2,6 +2,7 @@ package com.ccw.common;
 
 public class Params {
 	public static final String CCW_CONTEXT = "http://www.chinesecookingworkshop.com/";
+	public static final String SPLIT_SIGN = "_@@@_";
 	public static final String NO_REGISTED_GUY_ID = "anonymous";
 	public static final String AUTOMATIC_REGISTERED_USER_FORMAT = "ccwmember";
 	public static final String AUTOMATIC_REGISTERED_DEFAULT_PASSWORD = "ILoveCCW2011";

@@ -176,17 +176,19 @@ public class CourseListAction extends ActionSupport {
 			
 			ArrayList<Coursecalendar> courses = courseDao.getCoursecalendarBycourseLocationByMonth(courseLocationId, month);
 			ArrayList<Classtime> allTimes = courseDao.getAllClasstime();
+			Courselocation courseLocation = courseDao.getDetailCourselocation(courseLocationId);
 			Map session = ActionContext.getContext().getSession();
 			Locale locale = (Locale)session.get("WW_TRANS_I18N_LOCALE");
 			
-			ExcelCalendar excelCalendar = new ExcelCalendar(courses, allTimes, courseLocationId, month, locale);
+			ExcelCalendar excelCalendar = new ExcelCalendar(courses, allTimes, courseLocation, month, locale);
 			HSSFWorkbook wb = excelCalendar.generateMonthScheduleExcel();
 			String file = ServletActionContext.getServletContext().getRealPath("temp") + File.separator + new Date().getTime() + ".xls";
 	        out = new FileOutputStream(file);
 	        wb.write(out);
 			setFileInputStream(new FileInputStream(file));
 			setContentType("application/vnd.ms-excel");
-			setFileName("CCW-Calendar.xls");
+			SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMM");
+			setFileName("CCWCalendar-[" + sdf1.format(month) + " " + courseLocation.getCourseLocationName() + "].xls");
 			
 			return SUCCESS;
 		} catch (Exception e) {

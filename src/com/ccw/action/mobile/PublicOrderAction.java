@@ -195,7 +195,7 @@ public class PublicOrderAction extends ActionSupport {
 		content.put("#cellphone#", order.getOrderbasic().getCellphone());
 		content.put("#email#", order.getOrderbasic().getEmail());
 		emailAndContactPerson = new String[]{adminEmail + "_with_CCW Auto Robot"};
-		spom = new SendMail(Params.ADMIN_BOOKING_ORDER_MAIL_SUBJECT, templatePath, content, emailAndContactPerson);
+		spom = new SendMail(Params.ADMIN_BOOKING_ORDER_MAIL_SUBJECT, templatePath, content, emailAndContactPerson, true);
 		spom.start();
 	}
 	

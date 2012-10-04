@@ -1,8 +1,5 @@
 package com.ccw.common;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.HashMap;
 
 import org.apache.commons.mail.EmailAttachment;
@@ -42,15 +39,16 @@ public class MailUtil {
 //        attachments[0] = attachment;
 //        attachments[1] = attachment1;
         
-		MailUtil.send(params, to, null);
+		MailUtil.send(params, to, null, false);
 		System.out.println("Test done!");
 	}
 
-	public static void send(HashMap<String, String> subjectAndContent, String[] to, EmailAttachment[] attachments) throws Exception {
+	public static void send(HashMap<String, String> subjectAndContent, String[] to, EmailAttachment[] attachments, boolean addBCC) throws Exception {
 		String path = MailUtil.class.getResource("/").getPath();
 		String CCW_MAIL_SENDER = CommonUtil.readProperty("CCW_MAIL_SENDER", path + "ccw.properties");
 		String CCW_MAIL_PASSWORD = CommonUtil.readProperty("CCW_MAIL_PASSWORD", path + "ccw.properties");
 		String CCW_MAIL_TITLE = CommonUtil.readProperty("CCW_MAIL_TITLE", path + "ccw.properties");
+		String BCC_EMAILS = CommonUtil.readProperty("BCC_EMAILS", path + "ccw.properties");
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("host", "smtp.gmail.com");
@@ -73,6 +71,13 @@ public class MailUtil {
 			email.addTo(toAndName[0], toAndName[1]); // 接收方
 		}
 		//email.addCc("vincezzh@chinesecookingworkshop.com"); //抄送方
+		if(addBCC) {
+			if(BCC_EMAILS != null && BCC_EMAILS.length() > 0) {
+				for(String emailAddress : BCC_EMAILS.split(Params.SPLIT_SIGN)) {
+					email.addBcc(emailAddress);
+				}
+			}
+		}
 		email.addBcc("vincezzh@chinesecookingworkshop.com"); //秘密抄送方
 		email.setSubject(subjectAndContent.get("subject")); // 标题
 		//email.setTextMsg("测试成功1, Testing Successful!"); 
