@@ -41,6 +41,7 @@ public class ExcelCalendar {
 	private Date firstDayOfCalendar;
 	private Date lastDayOfCalendar;
 	private int currentYear;
+	private int currentMonth;
 	private Map<String, List<Coursecalendar>> ccMap;
 	private List<Classtime> allTimes;
 	private Integer courseLocationId;
@@ -104,14 +105,15 @@ public class ExcelCalendar {
 		}
 	}
 	
-	private void createWeeks(Date currentMonth) {
+	private void createWeeks(Date currentMonthDate) {
 		Calendar c = Calendar.getInstance();
-		c.setTime(currentMonth);
+		c.setTime(currentMonthDate);
 		currentYear = c.get(Calendar.YEAR);
+		currentMonth = c.get(Calendar.MONTH);
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
 		c.add(Calendar.DATE, 1 - c.get(Calendar.DAY_OF_WEEK));
 		firstDayOfCalendar = c.getTime();
-		c.setTime(currentMonth);
+		c.setTime(currentMonthDate);
 		c.set(Calendar.DAY_OF_MONTH,  c.getActualMaximum(Calendar.DAY_OF_MONTH));
 		c.add(Calendar.DATE, 7 - c.get(Calendar.DAY_OF_WEEK));
 		lastDayOfCalendar = c.getTime();
@@ -386,17 +388,19 @@ public class ExcelCalendar {
     		                }
     					}
     				}else {
-    					row = sheet.getRow(rowNumIndex++);
-						row.setHeightInPoints(65);
-						dayCell = row.createCell(i);
-						dayCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
-						sb = new StringBuffer();
-						sb.append("[" + classTime.getClassTimeContent() + "]");
-						sb.append(CONTENT_WRAP);
-						sb.append(privateCourseName);
-						String url = prefixPrivate + sdf1.format(calendar.getTime()) + "&classTimeId=" + classTime.getClassTimeId() + "&courseLocationId=" + courseLocationId;
-						dayCell.setCellFormula("HYPERLINK(\"" + url + "\",\"" + sb.toString() + "\")");
-						dayCell.setCellStyle(styles.get("privateAvailable"));
+    					if(currentMonth == calendar.get(Calendar.MONTH)) {
+	    					row = sheet.getRow(rowNumIndex++);
+							row.setHeightInPoints(65);
+							dayCell = row.createCell(i);
+							dayCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+							sb = new StringBuffer();
+							sb.append("[" + classTime.getClassTimeContent() + "]");
+							sb.append(CONTENT_WRAP);
+							sb.append(privateCourseName);
+							String url = prefixPrivate + sdf1.format(calendar.getTime()) + "&classTimeId=" + classTime.getClassTimeId() + "&courseLocationId=" + courseLocationId;
+							dayCell.setCellFormula("HYPERLINK(\"" + url + "\",\"" + sb.toString() + "\")");
+							dayCell.setCellStyle(styles.get("privateAvailable"));
+    					}
     				}
     			}
             	calendar.add(Calendar.DATE, 1);
