@@ -110,9 +110,9 @@ function startAllSlider() {
 
 		<div id="location">
 			<s:select list="locationList" listKey="courseLocationId" listValue="courseLocationName" id="courseLocationSelector" value="location.courseLocationId" onchange="gotoRefreshCalendar(this.value)"></s:select>
+			<a href="javascript:void(0);" onclick="exportCalendar()"><b><s:text name="DOWNLOAD"/> <s:text name="CALENDAR"/></b></a>
 		</div>
 		<div id="calendar"></div>
-		<div onclick="exportCalendar()">CCW Calendar</div>
    	</div>
       	
     <br class="both" />

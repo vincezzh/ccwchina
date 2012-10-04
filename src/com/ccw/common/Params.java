@@ -14,7 +14,7 @@ public class Params {
 	public static final Integer PRIVATE_BRANCHTYPE_ID = 23;
 	public static final Integer SPECIAL_TYPE_NORMAL_ID = 1;
 	public static final String AVALIABLE_FONT_COLOR = "#fff";
-	public static final String AVALIABLE_BACKGROUND_COLOR = "#fec7f7";
+	public static final String AVALIABLE_BACKGROUND_COLOR = "#ff6699";
 	public static final Integer COPY_COURSE_CALENDAR_PERIOD_WEEKS = 26;
 	
 	public static final String DEFAULT = "DEFAULT";

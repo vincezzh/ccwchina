@@ -179,7 +179,7 @@ public class CourseListAction extends ActionSupport {
 			Map session = ActionContext.getContext().getSession();
 			Locale locale = (Locale)session.get("WW_TRANS_I18N_LOCALE");
 			
-			ExcelCalendar excelCalendar = new ExcelCalendar(courses, allTimes, month, locale);
+			ExcelCalendar excelCalendar = new ExcelCalendar(courses, allTimes, courseLocationId, month, locale);
 			HSSFWorkbook wb = excelCalendar.generateMonthScheduleExcel();
 			String file = ServletActionContext.getServletContext().getRealPath("temp") + File.separator + new Date().getTime() + ".xls";
 	        out = new FileOutputStream(file);

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFPalette;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -26,17 +27,24 @@ import com.ccw.bean.Calendarwithcourse;
 import com.ccw.bean.Classtime;
 import com.ccw.bean.Course;
 import com.ccw.bean.Coursecalendar;
+import com.ccw.common.Params;
+import com.ccw.common.PropertyUtil;
 
 public class ExcelCalendar {
-	private final String CONTENT_WRAP = "\r\n";
+	private String prefixPublic = Params.CCW_CONTEXT + "order/mail-public-order.htm?cid=";
+	private String prefixPrivate = Params.CCW_CONTEXT + "order/mail-private-order.htm?courseDate=";
+	private final String CONTENT_WRAP = "\n";
 	private String[] days;
-	private Map<Integer, String> months;
+	private String warmTip;
 	private List<String> weeks;
 	private Locale locale;
 	private Date firstDayOfCalendar;
 	private Date lastDayOfCalendar;
+	private int currentYear;
 	private Map<String, List<Coursecalendar>> ccMap;
 	private List<Classtime> allTimes;
+	private Integer courseLocationId;
+	private String privateCourseName;
 	
 	private HSSFWorkbook wb;
 	private HSSFPalette palette;
@@ -44,11 +52,12 @@ public class ExcelCalendar {
 	private short colorIndex = 63;
 	private Map<String, HSSFCellStyle> styles;
 	
-	public ExcelCalendar(List<Coursecalendar> courseCalendars, List<Classtime> allTimes, Date currentMonth, Locale locale) {
+	public ExcelCalendar(List<Coursecalendar> courseCalendars, List<Classtime> allTimes, Integer courseLocationId, Date currentMonth, Locale locale) {
 		wb = new HSSFWorkbook();
 		ccMap = new HashMap<String, List<Coursecalendar>>();
 		colorMap = new HashMap<String, Short>();
 		this.allTimes = allTimes;
+		this.courseLocationId = courseLocationId;
 		this.locale = locale;
 		this.initilize();
 		this.createWeeks(currentMonth);
@@ -57,18 +66,48 @@ public class ExcelCalendar {
 	}
 	
 	private void initilize() {
-		String[] days = {
+		String[] daysEn = {
 		        "Sunday", "Monday", "Tuesday",
 		        "Wednesday", "Thursday", "Friday", "Saturday"};
-		String[] months = {
-		        "January", "February", "March","April", "May", "June","July", "August",
-		        "September","October", "November", "December"};
-		
+		String[] daysJp = {
+		        "日曜日", "月曜日", "火曜日",
+		        "水曜日", "木曜日", "金曜日", "土曜日"};
+		String[] daysZh = {
+		        "星期天", "星期一", "星期二",
+		        "星期三", "星期四", "星期五", "星期六"};
+		String warmTipEn = "Tip: You can book courses directly by clicking the courses below.";
+		String warmTipJp = "ヒント：以下のコースをクリックして、あなたは、オンライン予約を指示することができるようになります。";
+		String warmTipZh = "提示：点击以下课程，您就能直接在线预定。";
+		String privateCourseNameEn = "Available to Private Course Booking";
+		String privateCourseNameJp = "スケジュールされたプライベートコース";
+		String privateCourseNameZh = "可以进行私人课程预定";
+		if(locale == null) {
+			days = daysEn;
+			warmTip = warmTipEn;
+			privateCourseName = privateCourseNameEn;
+		}else if(Params.USA.equals(locale.getLanguage())) {
+			days = daysEn;
+			warmTip = warmTipEn;
+			privateCourseName = privateCourseNameEn;
+		}else if(Params.CHINA.equals(locale.getLanguage())) {
+			days = daysZh;
+			warmTip = warmTipZh;
+			privateCourseName = privateCourseNameZh;
+		}else if(Params.JAPAN.equals(locale.getLanguage())) {
+			days = daysJp;
+			warmTip = warmTipJp;
+			privateCourseName = privateCourseNameJp;
+		}else {
+			days = daysEn;
+			warmTip = warmTipEn;
+			privateCourseName = privateCourseNameEn;
+		}
 	}
 	
 	private void createWeeks(Date currentMonth) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(currentMonth);
+		currentYear = c.get(Calendar.YEAR);
 		c.set(Calendar.DAY_OF_MONTH, c.getActualMinimum(Calendar.DAY_OF_MONTH));
 		c.add(Calendar.DATE, 1 - c.get(Calendar.DAY_OF_WEEK));
 		firstDayOfCalendar = c.getTime();
@@ -86,7 +125,7 @@ public class ExcelCalendar {
 			sheetTitle = new StringBuffer();
 			c.add(Calendar.DATE, 1);
 			sheetTitle.append(sdf.format(c.getTime()));
-			sheetTitle.append(" to ");
+			sheetTitle.append(" ~ ");
 			c.add(Calendar.DATE, 6);
 			sheetTitle.append(sdf.format(c.getTime()));
 			weeks.add(sheetTitle.toString());
@@ -137,6 +176,7 @@ public class ExcelCalendar {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+        style.setWrapText(true);
         style.setFont(titleFont);
         styles.put("title", style);
 
@@ -147,7 +187,7 @@ public class ExcelCalendar {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        style.setFillForegroundColor(IndexedColors.DARK_BLUE.getIndex());
+        style.setFillForegroundColor(IndexedColors.LIME.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         style.setFont(monthFont);
         styles.put("weekTitle", style);
@@ -158,7 +198,7 @@ public class ExcelCalendar {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-        style.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+        style.setFillForegroundColor(IndexedColors.CORAL.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
         style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setLeftBorderColor(borderColor);
@@ -203,10 +243,27 @@ public class ExcelCalendar {
         style.setBottomBorderColor(borderColor);
         style.setWrapText(true);
         styles.put("workdayContent", style);
+        
+        Font availableFont = wb.createFont();
+        availableFont.setFontHeightInPoints((short)10);
+        availableFont.setColor(IndexedColors.WHITE.getIndex());
+        style = wb.createCellStyle();
+        style.setAlignment(CellStyle.ALIGN_LEFT);
+        style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setFillForegroundColor(IndexedColors.ROSE.getIndex());
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setLeftBorderColor(borderColor);
+        style.setBorderBottom(CellStyle.BORDER_THIN);
+        style.setBottomBorderColor(borderColor);
+        style.setWrapText(true);
+        style.setFont(availableFont);
+        styles.put("privateAvailable", style);
     }
 	
 	public HSSFWorkbook generateMonthScheduleExcel() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(firstDayOfCalendar);
         StringBuffer sb = null;
@@ -232,17 +289,18 @@ public class ExcelCalendar {
 
             //the header row: centered text in 48pt font
             Row headerRow = sheet.createRow(0);
-            headerRow.setHeightInPoints(40);
+            headerRow.setHeightInPoints(80);
             Cell titleCell = headerRow.createCell(0);
-            titleCell.setCellValue(week);
+            titleCell.setCellValue(currentYear + " [" + week + "]" + CONTENT_WRAP + warmTip);
             titleCell.setCellStyle(styles.get("title"));
             sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$G$1"));
 
             //header with month titles
             Row monthRow = sheet.createRow(1);
+            monthRow.setHeightInPoints(24);
             for (int i = 0; i < days.length; i++) {
                 //set column widths, the width is measured in units of 1/256th of a character width
-                sheet.setColumnWidth(i, 30*256); //the column is 13 characters wide
+                sheet.setColumnWidth(i, 25*256); //the column is 25 characters wide
                 Cell monthCell = monthRow.createCell(i);
                 monthCell.setCellValue(days[i]);
                 monthCell.setCellStyle(styles.get("weekTitle"));
@@ -251,7 +309,7 @@ public class ExcelCalendar {
             //content
             int rownum = 2;
             sheet.createRow(rownum++);
-            int totalRowNumber = this.caculateTotalRowNumber(firstDayOfWeek);
+            int totalRowNumber = this.caculateTotalRowNumber(firstDayOfWeek) + 3;
             for(int i=0; i<totalRowNumber; i++) {
             	sheet.createRow(rownum++);
             }
@@ -276,21 +334,36 @@ public class ExcelCalendar {
     				if(ccList != null) {
     					for(Coursecalendar courseCalendar : ccList) {
     						row = sheet.getRow(rowNumIndex++);
-    						row.setHeightInPoints(80);
+    						row.setHeightInPoints(65);
     						dayCell = row.createCell(i);
     						sb = new StringBuffer();
     						sb.append("[" + classTime.getClassTimeContent() + "]");
     						sb.append(" ");
-    						sb.append(courseCalendar.getCoursebranchtype().getCourseBranchTypeNameKey());
+    						sb.append(this.getShowWord(locale, courseCalendar.getCoursebranchtype().getCourseBranchTypeNameKey()));
     						sb.append(CONTENT_WRAP);
     						Iterator<Calendarwithcourse> iCalendarwithcourse = courseCalendar.getCalendarwithcourses().iterator();
     						Course course = null;
+    						int number = 1;
     						while(iCalendarwithcourse.hasNext()) {
     							course = iCalendarwithcourse.next().getCourse();
-    							sb.append(course.getCourseNameEn());
+    							sb.append(number + ". ");
+    							if(locale == null) {
+    								sb.append(course.getCourseNameEn());
+    							}else if(Params.USA.equals(locale.getLanguage())) {
+    								sb.append(course.getCourseNameEn());
+    							}else if(Params.CHINA.equals(locale.getLanguage())) {
+    								sb.append(course.getCourseNameCn());
+    							}else if(Params.JAPAN.equals(locale.getLanguage())) {
+    								sb.append(course.getCourseNameJp());
+    							}else {
+    								sb.append(course.getCourseNameEn());
+    							}
     							sb.append(CONTENT_WRAP);
+    							number++;
     						}
-    						dayCell.setCellValue(sb.toString());
+    						dayCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+    						String url = prefixPublic + courseCalendar.getCourseCalendarId();
+    						dayCell.setCellFormula("HYPERLINK(\"" + url + "\",\"" + sb.toString() + "\")");
     						
     						if(i == 0 || i == days.length-1) {
     							HSSFCellStyle style = wb.createCellStyle();
@@ -312,6 +385,18 @@ public class ExcelCalendar {
     		                    dayCell.setCellStyle(style);
     		                }
     					}
+    				}else {
+    					row = sheet.getRow(rowNumIndex++);
+						row.setHeightInPoints(65);
+						dayCell = row.createCell(i);
+						dayCell.setCellType(HSSFCell.CELL_TYPE_FORMULA);
+						sb = new StringBuffer();
+						sb.append("[" + classTime.getClassTimeContent() + "]");
+						sb.append(CONTENT_WRAP);
+						sb.append(privateCourseName);
+						String url = prefixPrivate + sdf1.format(calendar.getTime()) + "&classTimeId=" + classTime.getClassTimeId() + "&courseLocationId=" + courseLocationId;
+						dayCell.setCellFormula("HYPERLINK(\"" + url + "\",\"" + sb.toString() + "\")");
+						dayCell.setCellStyle(styles.get("privateAvailable"));
     				}
     			}
             	calendar.add(Calendar.DATE, 1);
@@ -340,5 +425,21 @@ public class ExcelCalendar {
 			c.add(Calendar.DATE, 1);
 		}
 		return totalRowNumber;
+	}
+	
+	private String getShowWord(Locale locale, String key) {
+		String content = "";
+		if(locale == null) {
+			content = PropertyUtil.get(Params.DEFAULT, key);
+		}else if(Params.USA.equals(locale.getLanguage())) {
+			content = PropertyUtil.get(Params.USA, key);
+		}else if(Params.CHINA.equals(locale.getLanguage())) {
+			content = PropertyUtil.get(Params.CHINA, key);
+		}else if(Params.JAPAN.equals(locale.getLanguage())) {
+			content = PropertyUtil.get(Params.JAPAN, key);
+		}else {
+			content = PropertyUtil.get(Params.DEFAULT, key);
+		}
+		return content;
 	}
 }
