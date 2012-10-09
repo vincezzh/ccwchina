@@ -47,13 +47,13 @@ public class ExcelCalendar {
 	private List<Classtime> allTimes;
 	private Courselocation courseLocation;
 	private String privateCourseName;
-	
+
 	private HSSFWorkbook wb;
 	private HSSFPalette palette;
 	private Map<String, Short> colorMap;
 	private short colorIndex = 63;
 	private Map<String, HSSFCellStyle> styles;
-	
+
 	public ExcelCalendar(List<Coursecalendar> courseCalendars, List<Classtime> allTimes, Courselocation courseLocation, Date currentMonth, Locale locale) {
 		wb = new HSSFWorkbook();
 		ccMap = new HashMap<String, List<Coursecalendar>>();
@@ -66,7 +66,7 @@ public class ExcelCalendar {
 		this.transformListToMap(courseCalendars);
 		this.createStyles(wb);
 	}
-	
+
 	private void initilize() {
 		String[] daysEn = {
 		        "Sunday", "Monday", "Tuesday",
@@ -105,7 +105,7 @@ public class ExcelCalendar {
 			privateCourseName = privateCourseNameEn;
 		}
 	}
-	
+
 	private void createWeeks(Date currentMonthDate) {
 		Calendar c = Calendar.getInstance();
 		c.setTime(currentMonthDate);
@@ -118,7 +118,7 @@ public class ExcelCalendar {
 		c.set(Calendar.DAY_OF_MONTH,  c.getActualMaximum(Calendar.DAY_OF_MONTH));
 		c.add(Calendar.DATE, 7 - c.get(Calendar.DAY_OF_WEEK));
 		lastDayOfCalendar = c.getTime();
-		
+
 		weeks = new ArrayList<String>();
 		c.setTime(firstDayOfCalendar);
 		c.add(Calendar.DATE, -1);
@@ -134,7 +134,7 @@ public class ExcelCalendar {
 			weeks.add(sheetTitle.toString());
 		}while(c.getTime().compareTo(lastDayOfCalendar) < 0);
 	}
-	
+
 	private void transformListToMap(List<Coursecalendar> courseCalendars) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		for(Coursecalendar cc : courseCalendars) {
@@ -146,18 +146,18 @@ public class ExcelCalendar {
 			}else {
 				ccMap.get(ccMapKey).add(cc);
 			}
-			
+
 			//Collection Colors
-			this.collectColors(cc.getCoursetrunktype().getFontColor());
-			this.collectColors(cc.getCoursetrunktype().getBackgroundColor());
+//			this.collectColors(cc.getCoursetrunktype().getFontColor());
+//			this.collectColors(cc.getCoursetrunktype().getBackgroundColor());
 		}
 	}
-	
+
 	private void collectColors(String hexColor) {
 		if(colorMap.get(hexColor) == null) {
 			if(palette == null)
 				palette = wb.getCustomPalette();
-			
+
 	    	palette.setColorAtIndex(colorIndex,
 	                (byte) java.awt.Color.decode(hexColor).getRed(),
 	                (byte) java.awt.Color.decode(hexColor).getGreen(),
@@ -167,7 +167,7 @@ public class ExcelCalendar {
 	    	colorIndex--;
 		}
 	}
-	
+
 	private void createStyles(HSSFWorkbook wb){
 		styles = new HashMap<String, HSSFCellStyle>();
         short borderColor = IndexedColors.GREY_50_PERCENT.getIndex();
@@ -175,7 +175,7 @@ public class ExcelCalendar {
         HSSFCellStyle style;
         Font titleFont = wb.createFont();
         titleFont.setFontHeightInPoints((short)24);
-        titleFont.setColor(IndexedColors.DARK_BLUE.getIndex());
+//        titleFont.setColor(IndexedColors.DARK_BLUE.getIndex());
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
@@ -185,13 +185,22 @@ public class ExcelCalendar {
 
         Font monthFont = wb.createFont();
         monthFont.setFontHeightInPoints((short)12);
-        monthFont.setColor(IndexedColors.WHITE.getIndex());
+//        monthFont.setColor(IndexedColors.WHITE.getIndex());
         monthFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_CENTER);
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        style.setFillForegroundColor(IndexedColors.LIME.getIndex());
+//        style.setFillForegroundColor(IndexedColors.LIME.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
+        style.setBorderRight(CellStyle.BORDER_THIN);
+        style.setRightBorderColor(borderColor);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setLeftBorderColor(borderColor);
+        style.setBorderBottom(CellStyle.BORDER_THIN);
+        style.setBottomBorderColor(borderColor);
         style.setFont(monthFont);
         styles.put("weekTitle", style);
 
@@ -201,8 +210,13 @@ public class ExcelCalendar {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-        style.setFillForegroundColor(IndexedColors.CORAL.getIndex());
+//        style.setFillForegroundColor(IndexedColors.CORAL.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
+        style.setBorderRight(CellStyle.BORDER_THIN);
+        style.setRightBorderColor(borderColor);
         style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setLeftBorderColor(borderColor);
         style.setBorderBottom(CellStyle.BORDER_THIN);
@@ -214,8 +228,12 @@ public class ExcelCalendar {
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
         style.setBorderRight(CellStyle.BORDER_THIN);
         style.setRightBorderColor(borderColor);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setLeftBorderColor(borderColor);
         style.setBorderBottom(CellStyle.BORDER_THIN);
         style.setBottomBorderColor(borderColor);
         style.setWrapText(true);
@@ -227,9 +245,13 @@ public class ExcelCalendar {
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-        style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
+        style.setBorderRight(CellStyle.BORDER_THIN);
+        style.setRightBorderColor(borderColor);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setLeftBorderColor(borderColor);
         style.setBorderBottom(CellStyle.BORDER_THIN);
         style.setBottomBorderColor(borderColor);
@@ -240,8 +262,12 @@ public class ExcelCalendar {
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
         style.setBorderRight(CellStyle.BORDER_THIN);
         style.setRightBorderColor(borderColor);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
+        style.setLeftBorderColor(borderColor);
         style.setBorderBottom(CellStyle.BORDER_THIN);
         style.setBottomBorderColor(borderColor);
         style.setWrapText(true);
@@ -249,13 +275,18 @@ public class ExcelCalendar {
         
         Font availableFont = wb.createFont();
         availableFont.setFontHeightInPoints((short)10);
-        availableFont.setColor(IndexedColors.WHITE.getIndex());
+//        availableFont.setColor(IndexedColors.WHITE.getIndex());
         style = wb.createCellStyle();
         style.setAlignment(CellStyle.ALIGN_LEFT);
         style.setVerticalAlignment(CellStyle.VERTICAL_TOP);
-        style.setBorderLeft(CellStyle.BORDER_THIN);
-        style.setFillForegroundColor(IndexedColors.ROSE.getIndex());
+//        style.setFillForegroundColor(IndexedColors.ROSE.getIndex());
+        style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderTop(CellStyle.BORDER_THIN);
+        style.setTopBorderColor(borderColor);
+        style.setBorderRight(CellStyle.BORDER_THIN);
+        style.setRightBorderColor(borderColor);
+        style.setBorderLeft(CellStyle.BORDER_THIN);
         style.setLeftBorderColor(borderColor);
         style.setBorderBottom(CellStyle.BORDER_THIN);
         style.setBottomBorderColor(borderColor);
@@ -263,7 +294,7 @@ public class ExcelCalendar {
         style.setFont(availableFont);
         styles.put("privateAvailable", style);
     }
-	
+
 	public HSSFWorkbook generateMonthScheduleExcel() throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
@@ -371,19 +402,21 @@ public class ExcelCalendar {
     						if(i == 0 || i == days.length-1) {
     							HSSFCellStyle style = wb.createCellStyle();
     							style.cloneStyleFrom(styles.get("weekendContent"));
-    							style.setFillForegroundColor(colorMap.get(courseCalendar.getCoursetrunktype().getBackgroundColor()));
+//    							style.setFillForegroundColor(colorMap.get(courseCalendar.getCoursetrunktype().getBackgroundColor()));
+    							style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
     							Font font = wb.createFont();
     							font.setFontHeightInPoints((short)10);
-    							font.setColor(colorMap.get(courseCalendar.getCoursetrunktype().getFontColor()));
+//    							font.setColor(colorMap.get(courseCalendar.getCoursetrunktype().getFontColor()));
     							style.setFont(font);
     		                    dayCell.setCellStyle(style);
     		                } else {
     		                	HSSFCellStyle style = wb.createCellStyle();
     							style.cloneStyleFrom(styles.get("workdayContent"));
-    							style.setFillForegroundColor(colorMap.get(courseCalendar.getCoursetrunktype().getBackgroundColor()));
+//    							style.setFillForegroundColor(colorMap.get(courseCalendar.getCoursetrunktype().getBackgroundColor()));
+    							style.setFillForegroundColor(IndexedColors.WHITE.getIndex());
     							Font font = wb.createFont();
     							font.setFontHeightInPoints((short)10);
-    							font.setColor(colorMap.get(courseCalendar.getCoursetrunktype().getFontColor()));
+//    							font.setColor(colorMap.get(courseCalendar.getCoursetrunktype().getFontColor()));
     							style.setFont(font);
     		                    dayCell.setCellStyle(style);
     		                }
@@ -410,7 +443,7 @@ public class ExcelCalendar {
         
         return wb;
     }
-	
+
 	private int caculateTotalRowNumber(Date firstDayOfWeek) {
 		int totalRowNumber = 0;
 		Calendar c = Calendar.getInstance();
@@ -422,7 +455,7 @@ public class ExcelCalendar {
 				String ccMapKey = sdf.format(c.getTime()) + "@@@" + classTime.getClassTimeId();
 				if(ccMap.get(ccMapKey) != null) {
 					listSize += ccMap.get(ccMapKey).size();
-					
+
 				}
 			}
 			if(listSize > totalRowNumber)
@@ -431,7 +464,7 @@ public class ExcelCalendar {
 		}
 		return totalRowNumber;
 	}
-	
+
 	private String getShowWord(Locale locale, String key) {
 		String content = "";
 		if(locale == null) {

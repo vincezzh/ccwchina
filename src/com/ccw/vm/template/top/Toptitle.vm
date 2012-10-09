@@ -2,6 +2,7 @@
 jQuery(document).ready(function() {
 	checkLogin();
 	insertTitle();
+	initGoogleAd();
 });
 
 function checkLogin() {
@@ -65,9 +66,112 @@ function insertTitle() {
 </div>
 <div class="top_adv center">
 	<a href="${entity.advertisment.advertisementLink}" target="_blank"><img src="${entity.advertisment.advertisementPath}" alt="${entity.advertisment.advertisementTitle}" width="728" height="91"/></a>
+	
+	<!-- Google Ad -->
+	<script type="text/javascript">
+	<!--
+		google_ad_client = "ca-pub-3476096835770662";
+		/* CCW Title Ad */
+		google_ad_slot = "9009695822";
+		google_ad_width = 728;
+		google_ad_height = 90;
+	//-->
+	</script>
+	<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+	<!-- Google Ad end -->
 </div>
 <div class="center">
 	<div class="left logo"><a href="/index.htm"><img src="/images/framework/logo.jpg" /></a></div>
     <div class="right logoright"><img src="/images/framework/logo-right.jpg" /></div>
 </div>
 <div class="center both logo-bottom"><img src="/images/framework/logo_bottom.jpg" /></div>
+
+
+
+<script type="text/javascript">
+function tips_pop(){
+  var MsgPop=document.getElementById("winpop");
+  var popH=parseInt(MsgPop.style.height);
+   if (popH==0){
+   MsgPop.style.display="block";
+  show=setInterval("changeH('up')",2);
+   }
+  else { 
+   hide=setInterval("changeH('down')",2);
+  }
+}
+function changeH(str) {
+ var MsgPop=document.getElementById("winpop");
+ var popH=parseInt(MsgPop.style.height);
+ if(str=="up"){
+  if (popH<=150){
+  MsgPop.style.height=(popH+4).toString()+"px";
+  }
+  else{  
+  clearInterval(show);
+  }
+ }
+ if(str=="down"){ 
+  if (popH>=4){  
+  MsgPop.style.height=(popH-4).toString()+"px";
+  }
+  else{ 
+  clearInterval(hide);   
+  MsgPop.style.display="none";
+  }
+ }
+}
+
+function initGoogleAd() {
+	var diffY;
+	if (document.documentElement && document.documentElement.scrollTop)
+	    diffY = document.documentElement.scrollTop;
+	else if (document.body)
+	    diffY = document.body.scrollTop;
+	var clientY;
+    if (document.documentElement && document.documentElement.clientHeight)
+	    clientY = document.documentElement.clientHeight;
+	else if (document.body)
+		clientY = document.body.clientHeight;
+    
+	document.getElementById('winpop').style.height = '0px';
+	document.getElementById('winpop').style.top = (diffY + clientY - 152) + 'px';
+	setTimeout("tips_pop()", 800);
+	window.setInterval("heartBeatAd()", 100);
+}
+
+function heartBeatAd(){
+	var diffY;
+	if (document.documentElement && document.documentElement.scrollTop)
+	    diffY = document.documentElement.scrollTop;
+	else if (document.body)
+	    diffY = document.body.scrollTop;
+	
+	var clientY;
+    if (document.documentElement && document.documentElement.clientHeight)
+	    clientY = document.documentElement.clientHeight;
+	else if (document.body)
+		clientY = document.body.clientHeight;
+		
+	var MsgPop = document.getElementById("winpop");
+	var popH = parseInt(MsgPop.style.height);
+		
+	document.getElementById('winpop').style.top = (diffY + clientY - popH) + 'px';
+}
+</script>
+<div id="winpop">
+	<div class="title"><span class="close" onclick="tips_pop()">X</span></div>
+	<div class="con">
+	    <script type="text/javascript">
+	    <!--
+			google_ad_client = "ca-pub-3476096835770662";
+			/* CCW Right Bottom Ad */
+			google_ad_slot = "4034387187";
+			google_ad_width = 180;
+			google_ad_height = 150;
+		//-->
+		</script>
+		<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+	</div>
+</div>
